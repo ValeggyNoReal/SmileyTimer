@@ -158,7 +158,7 @@
             pointer-events: none;
             opacity: 1;
             visibility: visible;
-            transition: transform 0.3s;
+            transition: transform 0.3s, opacity 0.5s ease, filter 0.3s;
         }
 
         #companionSprite {
@@ -196,34 +196,6 @@
             opacity: 0;
             pointer-events: none;
             z-index: 3000;
-        }
-
-        body.glitching {
-            animation: screenGlitch 0.08s infinite;
-        }
-
-        body.glitching::after {
-            content: "";
-            position: fixed;
-            inset: 0;
-            z-index: 999999;
-            pointer-events: none;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(255, 0, 0, 0.16) 0,
-                rgba(255, 0, 0, 0.16) 2px,
-                transparent 2px,
-                transparent 8px
-            );
-        }
-
-        @keyframes screenGlitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(4px, -1px); }
-            40% { transform: translate(-5px, 2px); }
-            60% { transform: translate(3px, 2px); }
-            80% { transform: translate(-2px, -2px); }
-            100% { transform: translate(0); }
         }
 
         .dialogueGlitch {
@@ -577,7 +549,7 @@
          LÓGICA JAVASCRIPT
     ========================================================= -->
     <script>
-        /* --- RUTA DE ARCHIVOS --- */
+        /* --- RUTA DE ARCHIVOS Y SECUENCIA DE SPRITES --- */
         const NORMAL_SPRITE = "56 sin título_20260922190504.png";
         const TALKING_SPRITE = "58 sin título_20260922191951.png";
         const RANDOM_SPRITES = [
@@ -597,27 +569,28 @@
         const dialogue = document.getElementById("companionDialogue");
         const darkness = document.getElementById("darkness");
 
-        /* --- MENSAJES DE CONSOLA --- */
-        console.log(
-            "%cWhat are you looking at, huh?",
-            "font-size:26px;font-weight:bold;color:#ffe600;background:#111;padding:10px;"
-        );
-        console.log(
-            "%cWell, you won't find anything hidden here.",
-            "font-size:16px;color:white;background:#111;padding:6px;"
-        );
-        setTimeout(() => {
-            console.log(
-                "%cOr will you?",
-                "font-size:13px;color:#777;font-style:italic;"
-            );
-        }, 2500);
+        /* --- SECUENCIA DE ETAPAS DE SCROLL CON DEGRADACIÓN Y MUERTE --- */
+        const stages = [
+            { start: 0.00, sprite: NORMAL_SPRITE, text: "", opacity: 1 },
+            { start: 0.15, sprite: "58 sin título_20260922192158.png", text: "", opacity: 1 },
+            { start: 0.27, sprite: TALKING_SPRITE, text: "Looks like you're scrolling pretty far. If I were you, I wouldn't do that.", opacity: 1 },
+            { start: 0.38, sprite: "58 sin título_20260922192211.png", text: "", opacity: 1 },
+            { start: 0.48, sprite: "58 sin título_20260922192229.png", text: "What do you think you're doing?", opacity: 1 },
+            { start: 0.54, sprite: "58 sin título_20260922192238.png", text: "", opacity: 1 },
+            { start: 0.61, sprite: "58 sin título_20260922192238.png", text: "Please stop.", opacity: 1 },
+            { start: 0.68, sprite: "58 sin título_20260922192315.png", text: "", opacity: 1 },
+            { start: 0.75, sprite: "58 sin título_20260922192315.png", text: "CAN ANYONE HEAR ME?", opacity: 1 },
+            { start: 0.82, sprite: "58 sin título_20260922192327.png", text: "HELP...", opacity: 1 },
+            { start: 0.88, sprite: "58 sin título_20260922192327.png", text: "", opacity: 0.6 },
+            { start: 0.94, sprite: "58 sin título_20260922192327.png", text: "", opacity: 0 } // Muere / Desaparece por completo
+        ];
 
-        /* --- MANTENER VISIBILIDAD DE PERSONAJE --- */
+        let currentStage = -1;
+
+        /* --- MANTENER VISIBILIDAD DEL PERSONAJE (HASTA QUE MUERA) --- */
         function forceCharacterVisible() {
-            if (explore.classList.contains("active")) {
+            if (explore.classList.contains("active") && currentStage < stages.length - 1) {
                 companion.style.display = "block";
-                companion.style.opacity = "1";
                 companion.style.visibility = "visible";
             }
         }
@@ -640,6 +613,8 @@
             window.scrollTo({ top: 0, behavior: "auto" });
 
             if (name === "explore") {
+                currentStage = -1;
+                companion.style.opacity = "1";
                 forceCharacterVisible();
                 sprite.src = NORMAL_SPRITE;
                 dialogue.style.display = "none";
@@ -657,7 +632,7 @@
 
         function tryRandomSprite() {
             if (!explore.classList.contains("active")) return;
-            if (randomSpriteActive) return;
+            if (randomSpriteActive || currentStage >= stages.length - 1) return;
             if (Math.random() >= RANDOM_CHANCE) return;
 
             randomSpriteActive = true;
@@ -671,36 +646,12 @@
 
             clearTimeout(randomSpriteTimeout);
             randomSpriteTimeout = setTimeout(() => {
-                sprite.src = NORMAL_SPRITE;
-                dialogue.style.display = "none";
-                dialogue.textContent = "";
                 randomSpriteActive = false;
-                forceCharacterVisible();
-                
-                // Actualiza estado inmediatamente después de restablecer evento raro
                 updateExplore();
             }, RANDOM_DURATION);
         }
 
         setInterval(tryRandomSprite, RANDOM_CHECK_INTERVAL);
-
-        /* --- ETAPAS DE SCROLL --- */
-        const stages = [
-            { start: 0, sprite: NORMAL_SPRITE, text: "" },
-            { start: 0.15, sprite: NORMAL_SPRITE, text: "" },
-            { start: 0.27, sprite: TALKING_SPRITE, text: "Looks like you're scrolling pretty far. If I were you, I wouldn't do that." },
-            { start: 0.38, sprite: NORMAL_SPRITE, text: "" },
-            { start: 0.48, sprite: TALKING_SPRITE, text: "What do you think you're doing?" },
-            { start: 0.54, sprite: NORMAL_SPRITE, text: "" },
-            { start: 0.61, sprite: TALKING_SPRITE, text: "Please stop." },
-            { start: 0.68, sprite: NORMAL_SPRITE, text: "" },
-            { start: 0.75, sprite: TALKING_SPRITE, text: "CAN ANYONE HEAR ME?" },
-            { start: 0.80, sprite: NORMAL_SPRITE, text: "" },
-            { start: 0.84, sprite: TALKING_SPRITE, text: "HELP" },
-            { start: 0.89, sprite: NORMAL_SPRITE, text: "" }
-        ];
-
-        let currentStage = -1;
 
         function setStage(index) {
             if (randomSpriteActive) return;
@@ -710,8 +661,14 @@
             const stage = stages[index];
             if (!stage) return;
 
-            forceCharacterVisible();
             sprite.src = stage.sprite;
+            companion.style.opacity = stage.opacity;
+
+            if (stage.opacity === 0) {
+                companion.style.display = "none";
+            } else {
+                companion.style.display = "block";
+            }
 
             if (stage.text) {
                 dialogue.textContent = stage.text;
@@ -721,14 +678,7 @@
                 dialogue.style.display = "none";
             }
 
-            const deterioration = index / (stages.length - 1);
-            sprite.style.filter = `
-                contrast(${1 + deterioration * 0.6})
-                saturate(${1 + deterioration * 0.5})
-                drop-shadow(8px 10px 4px rgba(0,0,0,0.5))
-            `;
-
-            if (index >= 6) {
+            if (index >= 4) {
                 dialogue.classList.add("dialogueGlitch");
                 dialogue.style.background = "#080808";
                 dialogue.style.color = "#ff3333";
@@ -741,11 +691,9 @@
             }
         }
 
-        /* --- LOGICA DE SCROLL --- */
+        /* --- LÓGICA DE SCROLL --- */
         function updateExplore() {
             if (!explore.classList.contains("active")) return;
-
-            forceCharacterVisible();
 
             const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
             if (maxScroll <= 0) return;
@@ -779,12 +727,6 @@
         }
 
         window.addEventListener("scroll", updateExplore, { passive: true });
-
-        setInterval(() => {
-            if (explore.classList.contains("active")) {
-                forceCharacterVisible();
-            }
-        }, 1000);
 
         /* --- SONIDO DE FINAL --- */
         const victorySound = new Audio("freesound_community-goodresult-82807.mp3");
@@ -897,7 +839,6 @@
         setInterval(updateTimer, 1000);
 
         sprite.src = NORMAL_SPRITE;
-        forceCharacterVisible();
         setStage(0);
         updateExplore();
     </script>
