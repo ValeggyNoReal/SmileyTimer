@@ -7,10 +7,6 @@
 <title>Smiley Timer</title>
 
 <style>
-/* =========================================================
-   GENERAL
-========================================================= */
-
 * {
     box-sizing: border-box;
 }
@@ -26,7 +22,8 @@ body {
     background: #ffe600;
 }
 
-button, select {
+button,
+select {
     font-family: inherit;
 }
 
@@ -38,6 +35,7 @@ nav {
     position: fixed;
     top: 0;
     left: 0;
+
     width: 100%;
     height: 72px;
 
@@ -47,7 +45,7 @@ nav {
 
     padding: 0 28px;
 
-    background: rgba(15,15,15,.96);
+    background: rgba(15, 15, 15, 0.96);
     border-bottom: 3px solid #ffe600;
 
     z-index: 100000;
@@ -77,7 +75,8 @@ nav {
     font-weight: bold;
 
     cursor: pointer;
-    transition: .2s;
+
+    transition: 0.2s;
 }
 
 .navButton:hover {
@@ -109,18 +108,9 @@ nav {
 #explore {
     position: relative;
 
-    /*
-       MUY MUY LARGO.
-    */
-
     min-height: 85000px;
 
     background-color: #ffe600;
-
-    /*
-       Una de las imágenes amarillas repetidas
-       que me pasaste.
-    */
 
     background-image:
         url("assets/56 sin título_20260922190604.png");
@@ -204,7 +194,7 @@ nav {
 }
 
 /* =========================================================
-   SMILEY QUE SIEMPRE TE ACOMPAÑA
+   SMILEY FIJO
 ========================================================= */
 
 #smileyCompanion {
@@ -222,7 +212,7 @@ nav {
     transition:
         opacity 1s,
         transform 1s,
-        filter .5s;
+        filter 0.5s;
 }
 
 #companionSprite {
@@ -240,13 +230,13 @@ nav {
         );
 
     transition:
-        filter .5s,
-        opacity .5s,
-        transform .2s;
+        filter 0.5s,
+        opacity 0.5s,
+        transform 0.2s;
 }
 
 /* =========================================================
-   TEXTO DE SMILEY
+   DIÁLOGO
 ========================================================= */
 
 #companionDialogue {
@@ -276,19 +266,18 @@ nav {
         rgba(0,0,0,.3);
 
     transition:
-        filter .5s,
-        background .5s,
-        color .5s,
-        transform .2s;
+        filter 0.5s,
+        background 0.5s,
+        color 0.5s,
+        transform 0.2s;
 }
 
 /* =========================================================
-   OSCURIDAD ROJA
+   OSCURIDAD
 ========================================================= */
 
 #darkness {
     position: fixed;
-
     inset: 0;
 
     background:
@@ -310,7 +299,7 @@ nav {
 ========================================================= */
 
 body.glitching {
-    animation: screenGlitch .08s infinite;
+    animation: screenGlitch 0.08s infinite;
 }
 
 body.glitching::after {
@@ -360,7 +349,7 @@ body.glitching::after {
 }
 
 .dialogueGlitch {
-    animation: dialogueGlitch .12s infinite;
+    animation: dialogueGlitch 0.12s infinite;
 }
 
 @keyframes dialogueGlitch {
@@ -382,14 +371,13 @@ body.glitching::after {
 }
 
 /* =========================================================
-   PAISAJE FINAL
+   FINAL
 ========================================================= */
 
 #ending {
     min-height: 100vh;
 
     position: relative;
-
     z-index: 5000;
 
     display: flex;
@@ -398,10 +386,6 @@ body.glitching::after {
     align-items: center;
 
     text-align: center;
-
-    /*
-       Tu última imagen / paisaje.
-    */
 
     background-image:
         url("assets/57 sin título_20260922191646.png");
@@ -445,7 +429,7 @@ body.glitching::after {
 
     color: black !important;
 
-    opacity: .09;
+    opacity: 0.09;
 
     font-size: 17px !important;
 
@@ -514,12 +498,12 @@ body.glitching::after {
         );
 
     animation:
-        timerFloat
-        3s ease-in-out infinite;
+        timerFloat 3s ease-in-out infinite;
 }
 
 @keyframes timerFloat {
-    0%,100% {
+    0%,
+    100% {
         transform: translateY(0);
     }
 
@@ -597,7 +581,7 @@ body.glitching::after {
 #gallery {
     min-height: 100vh;
 
-    padding: 110px 20px 50px;
+    padding: 110px 20px 80px;
 
     text-align: center;
 
@@ -625,33 +609,62 @@ body.glitching::after {
         5px 5px black;
 }
 
-.galleryCard {
-    width: min(620px, 90%);
+.galleryContainer {
+    max-width: 1300px;
 
-    margin: 50px auto;
+    margin: auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+
+    gap: 35px;
+}
+
+.galleryCard {
+    width: min(520px, 90vw);
 
     padding: 35px;
 
     background:
-        rgba(255,255,255,.82);
+        rgba(255,255,255,.84);
 
     border: 5px solid white;
-
     border-radius: 30px;
 
     box-shadow:
         10px 10px 0
         rgba(0,0,0,.25);
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+.galleryCard:hover {
+    transform:
+        translateY(-8px)
+        rotate(-1deg);
+
+    box-shadow:
+        15px 17px 0
+        rgba(0,0,0,.25);
 }
 
 .galleryCard img {
-    width: min(430px, 90%);
+    width: 100%;
+    max-height: 430px;
 
-    image-rendering: pixelated;
+    object-fit: contain;
+
+    border-radius: 15px;
 }
 
 .galleryCard h2 {
-    font-size: 40px;
+    margin-bottom: 0;
+
+    font-size: 35px;
 }
 
 /* =========================================================
@@ -693,6 +706,10 @@ body.glitching::after {
 
     .timeUnit {
         min-width: 125px;
+    }
+
+    .galleryCard {
+        padding: 20px;
     }
 }
 
@@ -759,13 +776,11 @@ body.glitching::after {
     </section>
 
     <!--
+        Página intencionalmente muy larga.
         No hay datos curiosos.
-        Solo una cantidad absurda de espacio.
     -->
 
     <div class="explorationSpace"></div>
-
-    <!-- FINAL -->
 
     <section id="ending">
 
@@ -794,10 +809,6 @@ body.glitching::after {
 ===================================================== -->
 
 <div id="smileyCompanion">
-
-    <!--
-        Primer sprite original que me pasaste.
-    -->
 
     <img
         id="companionSprite"
@@ -878,19 +889,14 @@ body.glitching::after {
             <option value="nl">Nederlands</option>
             <option value="pl">Polski</option>
             <option value="ru">Русский</option>
-            <option value="uk">Українська</option>
 
             <option value="ja">日本語</option>
             <option value="ko">한국어</option>
             <option value="zh">中文</option>
 
             <option value="ar">العربية</option>
-            <option value="he">עברית</option>
 
             <option value="tr">Türkçe</option>
-            <option value="el">Ελληνικά</option>
-            <option value="hi">हिन्दी</option>
-            <option value="id">Bahasa Indonesia</option>
 
         </select>
 
@@ -910,21 +916,35 @@ body.glitching::after {
         Galería
     </h1>
 
-    <div class="galleryCard">
+    <div class="galleryContainer">
 
-        <!--
-            Imagen original del cubo.
-            Si el cubo corresponde a otra de tus imágenes,
-            solo cambia este nombre por esa.
-        -->
+        <!-- CUBO -->
 
-        <img
-            src="assets/58 sin título_20260922191951.png"
-            alt="Smiley Cube">
+        <div class="galleryCard">
 
-        <h2>
-            Smiley Cube
-        </h2>
+            <img
+                src="assets/58 sin título_20260922191951.png"
+                alt="Smiley Cube">
+
+            <h2>
+                Smiley Cube
+            </h2>
+
+        </div>
+
+        <!-- NUEVA IMAGEN QUE MANDASTE -->
+
+        <div class="galleryCard">
+
+            <img
+                src="a98c128d37aefc208b794e092faa478b.jpg"
+                alt="Smiley">
+
+            <h2>
+                Smiley
+            </h2>
+
+        </div>
 
     </div>
 
@@ -975,7 +995,7 @@ const darkness =
     document.getElementById("darkness");
 
 /* =========================================================
-   PÁGINAS
+   CAMBIAR PÁGINA
 ========================================================= */
 
 function showPage(name) {
@@ -983,13 +1003,17 @@ function showPage(name) {
     document
         .querySelectorAll(".page")
         .forEach(page => {
+
             page.classList.remove("active");
+
         });
 
     document
         .querySelectorAll(".navButton")
         .forEach(button => {
+
             button.classList.remove("active");
+
         });
 
     document
@@ -1002,13 +1026,18 @@ function showPage(name) {
 
     if(name === "explore") {
 
-        companion.style.display = "block";
+        companion.style.display =
+            "block";
 
-    } else {
+    }
 
-        companion.style.display = "none";
+    else {
 
-        darkness.style.opacity = "0";
+        companion.style.display =
+            "none";
+
+        darkness.style.opacity =
+            "0";
 
     }
 
@@ -1016,15 +1045,10 @@ function showPage(name) {
 }
 
 /* =========================================================
-   SPRITES ORIGINALES
-
-   Se usan directamente los nombres con los
-   que me mandaste las imágenes.
+   ETAPAS DEL PERSONAJE
 ========================================================= */
 
 const stages = [
-
-    /* 0 - NORMAL / CALLADO */
 
     {
         start: 0,
@@ -1037,8 +1061,6 @@ const stages = [
         glitch: false
     },
 
-    /* 1 - TODAVÍA NORMAL */
-
     {
         start: .12,
 
@@ -1049,8 +1071,6 @@ const stages = [
 
         glitch: false
     },
-
-    /* 2 - PRIMER MENSAJE */
 
     {
         start: .25,
@@ -1064,8 +1084,6 @@ const stages = [
         glitch: true
     },
 
-    /* 3 */
-
     {
         start: .38,
 
@@ -1076,8 +1094,6 @@ const stages = [
 
         glitch: true
     },
-
-    /* 4 */
 
     {
         start: .48,
@@ -1091,8 +1107,6 @@ const stages = [
         glitch: true
     },
 
-    /* 5 */
-
     {
         start: .58,
 
@@ -1105,8 +1119,6 @@ const stages = [
         glitch: true
     },
 
-    /* 6 */
-
     {
         start: .67,
 
@@ -1117,8 +1129,6 @@ const stages = [
 
         glitch: true
     },
-
-    /* 7 */
 
     {
         start: .74,
@@ -1131,8 +1141,6 @@ const stages = [
 
         glitch: true
     },
-
-    /* 8 */
 
     {
         start: .81,
@@ -1163,13 +1171,15 @@ function setStage(index) {
 
     currentStage = index;
 
-    const stage = stages[index];
+    const stage =
+        stages[index];
 
     if(!stage) {
         return;
     }
 
-    sprite.src = stage.sprite;
+    sprite.src =
+        stage.sprite;
 
     if(stage.text) {
 
@@ -1179,7 +1189,9 @@ function setStage(index) {
         dialogue.style.display =
             "block";
 
-    } else {
+    }
+
+    else {
 
         dialogue.textContent = "";
 
@@ -1187,10 +1199,6 @@ function setStage(index) {
             "none";
 
     }
-
-    /*
-       Deterioro progresivo.
-    */
 
     const deterioration =
         index /
@@ -1211,10 +1219,6 @@ function setStage(index) {
 
     `;
 
-    /*
-       El texto también empeora.
-    */
-
     if(index >= 4) {
 
         dialogue.classList.add(
@@ -1233,7 +1237,9 @@ function setStage(index) {
         dialogue.style.filter =
             `blur(${deterioration * .45}px)`;
 
-    } else {
+    }
+
+    else {
 
         dialogue.classList.remove(
             "dialogueGlitch"
@@ -1250,11 +1256,12 @@ function setStage(index) {
 
         dialogue.style.filter =
             "none";
+
     }
 
     /*
        50% de probabilidad
-       de glitch durante 2 segundos.
+       de anomalía.
     */
 
     if(
@@ -1265,11 +1272,10 @@ function setStage(index) {
         startGlitch();
 
     }
-
 }
 
 /* =========================================================
-   GLITCH
+   GLITCH DE 2 SEGUNDOS
 ========================================================= */
 
 let glitchRunning = false;
@@ -1329,10 +1335,6 @@ function updateExplore() {
             )
         );
 
-    /*
-       Buscar estado correspondiente.
-    */
-
     let stageIndex = 0;
 
     for(
@@ -1349,35 +1351,33 @@ function updateExplore() {
             stageIndex = i;
 
         }
-
     }
 
-    /* ================================================
-       SMILEY
-    ================================================= */
+    /* =====================================================
+       PERSONAJE
+    ===================================================== */
 
     if(progress >= .86) {
-
-        /*
-           Después de HELP desaparece.
-        */
 
         if(!characterGone) {
 
             characterGone = true;
 
-            companion.style.opacity = "0";
+            companion.style.opacity =
+                "0";
 
             companion.style.transform =
                 "translateY(100px) scale(.7)";
 
         }
+    }
 
-    } else {
+    else {
 
         characterGone = false;
 
-        companion.style.opacity = "1";
+        companion.style.opacity =
+            "1";
 
         companion.style.transform =
             "translateY(0) scale(1)";
@@ -1385,15 +1385,11 @@ function updateExplore() {
         setStage(stageIndex);
     }
 
-    /* ================================================
-       ROJO / OSCURIDAD
-    ================================================= */
+    /* =====================================================
+       OSCURIDAD
+    ===================================================== */
 
     let amount = 0;
-
-    /*
-       Empieza lentamente.
-    */
 
     if(
         progress >= .35 &&
@@ -1406,12 +1402,7 @@ function updateExplore() {
             (.65 - .35);
 
         amount *= .75;
-
     }
-
-    /*
-       Zona más oscura.
-    */
 
     else if(
         progress >= .65 &&
@@ -1419,13 +1410,7 @@ function updateExplore() {
     ) {
 
         amount = .75;
-
     }
-
-    /*
-       Después de HELP vuelve
-       progresivamente a la normalidad.
-    */
 
     else if(
         progress >= .86 &&
@@ -1442,18 +1427,11 @@ function updateExplore() {
                     (.94 - .86)
                 )
             );
-
     }
-
-    /*
-       Cerca del paisaje ya está
-       completamente normal.
-    */
 
     else if(progress >= .94) {
 
         amount = 0;
-
     }
 
     darkness.style.opacity =
@@ -1472,7 +1450,7 @@ window.addEventListener(
 );
 
 /* =========================================================
-   SONIDO DE VICTORIA QUE ME PASASTE
+   SONIDO DE VICTORIA
 ========================================================= */
 
 const victorySound =
@@ -1499,30 +1477,27 @@ const endingObserver =
 
                     victoryPlayed = true;
 
-                    victorySound.currentTime = 0;
+                    victorySound.currentTime =
+                        0;
 
                     victorySound
                         .play()
                         .catch(() => {
 
                             /*
-                               Algunos navegadores
-                               pueden bloquear audio
-                               automático.
+                              Algunos navegadores
+                              bloquean reproducción
+                              automática.
                             */
 
                         });
-
                 }
-
             });
-
         },
 
         {
             threshold: .4
         }
-
     );
 
 endingObserver.observe(ending);
@@ -1543,7 +1518,8 @@ const targetDate =
 
 function updateTimer() {
 
-    const now = new Date();
+    const now =
+        new Date();
 
     let difference =
         targetDate.getTime()
@@ -1637,13 +1613,8 @@ function updateTimer() {
         .padStart(2,"0");
 }
 
-setInterval(
-    updateTimer,
-    1000
-);
-
 /* =========================================================
-   TRADUCCIONES
+   IDIOMAS
 ========================================================= */
 
 const translations = {
@@ -1861,7 +1832,7 @@ const translations = {
 };
 
 /* =========================================================
-   IDIOMA
+   IDIOMA ACTUAL
 ========================================================= */
 
 function getCurrentLocale() {
@@ -1877,7 +1848,6 @@ function getCurrentLocale() {
             navigator.language ||
             "en"
         );
-
     }
 
     return selected;
@@ -1898,7 +1868,6 @@ function translatePage() {
                 "en"
             )
             .split("-")[0];
-
     }
 
     const t =
@@ -1956,19 +1925,14 @@ function translatePage() {
         .textContent =
         t.seconds;
 
-    /*
-       Árabe / hebreo.
-    */
-
-    if(
-        language === "ar" ||
-        language === "he"
-    ) {
+    if(language === "ar") {
 
         document.documentElement.dir =
             "rtl";
 
-    } else {
+    }
+
+    else {
 
         document.documentElement.dir =
             "ltr";
@@ -1992,6 +1956,11 @@ document
 translatePage();
 
 updateTimer();
+
+setInterval(
+    updateTimer,
+    1000
+);
 
 setStage(0);
 
