@@ -1,2657 +1,905 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Smiley Timer</title>
-
-<style>
-
-/* =========================================================
-   GENERAL
-========================================================= */
-
-* {
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    margin: 0;
-    overflow-x: hidden;
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
-    background: #ffe600;
-}
-
-button,
-select {
-    font-family: inherit;
-}
-
-/* =========================================================
-   NAVEGACIÓN
-========================================================= */
-
-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 72px;
-
-    display: flex;
-    align-items: center;
-    gap: 28px;
-
-    padding: 0 28px;
-
-    background: rgba(15,15,15,.96);
-    border-bottom: 3px solid #ffe600;
-
-    z-index: 100000;
-}
-
-.logo {
-    margin-right: auto;
-
-    color: white;
-    font-size: 27px;
-    font-weight: bold;
-
-    -webkit-text-stroke: 1.5px #ffe600;
-
-    text-shadow:
-        2px 2px #000,
-        0 0 10px #ffe600;
-}
-
-.navButton {
-    border: 0;
-    background: transparent;
-
-    color: white;
-
-    font-size: 19px;
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition: .2s;
-}
-
-.navButton:hover {
-    color: #ffe600;
-    transform: scale(1.08);
-}
-
-.navButton.active {
-    color: #ffe600;
-    text-decoration: underline;
-}
-
-/* =========================================================
-   PÁGINAS
-========================================================= */
-
-.page {
-    display: none;
-}
-
-.page.active {
-    display: block;
-}
-
-/* =========================================================
-   EXPLORAR
-========================================================= */
-
-#explore {
-    position: relative;
-
-    min-height: 85000px;
-
-    background-color: #ffe600;
-
-    background-image:
-        url("56 sin título_20260922190604.png");
-
-    background-repeat: repeat;
-    background-size: 520px;
-}
-
-/* =========================================================
-   PORTADA
-========================================================= */
-
-.hero {
-    min-height: 100vh;
-
-    display: flex;
-    flex-direction: column;
-
-    justify-content: center;
-    align-items: center;
-
-    text-align: center;
-
-    padding: 110px 20px 30px;
-
-    position: relative;
-    z-index: 20;
-}
-
-.hero h1 {
-    margin: 0;
-
-    color: white;
-
-    font-size: clamp(60px,10vw,135px);
-
-    -webkit-text-stroke: 5px #e3cc00;
-
-    text-shadow:
-        6px 6px #000,
-        0 0 15px white;
-}
-
-.hero p {
-    color: white;
-
-    font-size: 28px;
-    font-weight: bold;
-
-    text-shadow: 3px 3px black;
-}
-
-.arrow {
-    margin-top: 25px;
-
-    color: white;
-    font-size: 55px;
-
-    text-shadow: 3px 3px black;
-
-    animation: arrow 1s infinite alternate;
-}
-
-@keyframes arrow {
-    from {
-        transform: translateY(0);
-    }
-
-    to {
-        transform: translateY(15px);
-    }
-}
-
-/* =========================================================
-   ESPACIO DE EXPLORACIÓN
-========================================================= */
-
-.explorationSpace {
-    height: 76000px;
-}
-
-/* =========================================================
-   PERSONAJE
-========================================================= */
-
-#smileyCompanion {
-    position: fixed;
-
-    left: 35px;
-    bottom: 25px;
-
-    width: 230px;
-
-    z-index: 6000;
-
-    pointer-events: none;
-
-    /*
-       IMPORTANTE:
-       ya NO modificamos opacity para hacerlo desaparecer.
-    */
-
-    opacity: 1;
-    visibility: visible;
-
-    transition:
-        transform .3s;
-}
-
-#companionSprite {
-    display: block;
-
-    width: 100%;
-    max-height: 300px;
-
-    object-fit: contain;
-
-    opacity: 1;
-
-    filter:
-        drop-shadow(
-            8px 10px 4px
-            rgba(0,0,0,.45)
-        );
-}
-
-/* =========================================================
-   DIÁLOGO
-========================================================= */
-
-#companionDialogue {
-    position: absolute;
-
-    left: 205px;
-    bottom: 85px;
-
-    width: 380px;
-
-    display: none;
-
-    padding: 20px 23px;
-
-    background: white;
-
-    border:
-        5px solid #e7cf00;
-
-    border-radius: 20px;
-
-    color: #111;
-
-    font-size: 20px;
-    font-weight: bold;
-
-    box-shadow:
-        8px 8px 0
-        rgba(0,0,0,.3);
-}
-
-/* =========================================================
-   OSCURIDAD
-========================================================= */
-
-#darkness {
-    position: fixed;
-
-    inset: 0;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(70,0,0,.25),
-            rgba(80,0,0,.95)
-        );
-
-    opacity: 0;
-
-    pointer-events: none;
-
-    z-index: 3000;
-}
-
-/* =========================================================
-   GLITCH
-========================================================= */
-
-body.glitching {
-    animation:
-        screenGlitch .08s infinite;
-}
-
-body.glitching::after {
-    content: "";
-
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 999999;
-
-    pointer-events: none;
-
-    background:
-        repeating-linear-gradient(
-            0deg,
-            rgba(255,0,0,.16) 0,
-            rgba(255,0,0,.16) 2px,
-            transparent 2px,
-            transparent 8px
-        );
-}
-
-@keyframes screenGlitch {
-
-    0% {
-        transform: translate(0);
-    }
-
-    20% {
-        transform:
-            translate(4px,-1px);
-    }
-
-    40% {
-        transform:
-            translate(-5px,2px);
-    }
-
-    60% {
-        transform:
-            translate(3px,2px);
-    }
-
-    80% {
-        transform:
-            translate(-2px,-2px);
-    }
-
-    100% {
-        transform: translate(0);
-    }
-}
-
-.dialogueGlitch {
-    animation:
-        dialogueGlitch .12s infinite;
-}
-
-@keyframes dialogueGlitch {
-
-    0% {
-        transform: translate(0);
-    }
-
-    25% {
-        transform:
-            translate(3px,-2px);
-    }
-
-    50% {
-        transform:
-            translate(-3px,1px);
-    }
-
-    75% {
-        transform:
-            translate(2px,2px);
-    }
-
-    100% {
-        transform: translate(0);
-    }
-}
-
-/* =========================================================
-   FINAL
-========================================================= */
-
-#ending {
-    min-height: 100vh;
-
-    position: relative;
-    z-index: 5000;
-
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-
-    text-align: center;
-
-    background-image:
-        url("57 sin título_20260922191646.png");
-
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.endBox {
-    padding: 45px;
-}
-
-.endBox h2 {
-    margin: 0;
-
-    color: white;
-
-    font-size:
-        clamp(50px,8vw,105px);
-
-    -webkit-text-stroke:
-        4px #ffe600;
-
-    text-shadow:
-        5px 5px black;
-}
-
-.endBox p {
-    color: white;
-
-    font-size: 30px;
-
-    font-weight: bold;
-
-    text-shadow:
-        3px 3px black;
-}
-
-.secret {
-    margin-top: 150px;
-
-    color: black !important;
-
-    opacity: .09;
-
-    font-size:
-        17px !important;
-
-    text-shadow:
-        none !important;
-}
-
-/* =========================================================
-   TIMER
-========================================================= */
-
-#timer {
-    min-height: 100vh;
-
-    background-color: #ffe600;
-
-    background-image:
-        url("56 sin título_20260922190655.png");
-
-    background-repeat: repeat;
-    background-size: 450px;
-}
-
-.timerPage {
-    min-height: 100vh;
-
-    padding:
-        120px 20px 70px;
-
-    text-align: center;
-}
-
-.timerPage h1 {
-    margin: 0;
-
-    color: white;
-
-    font-size:
-        clamp(60px,10vw,125px);
-
-    -webkit-text-stroke:
-        5px #d7c000;
-
-    text-shadow:
-        6px 6px black;
-}
-
-#timerSubtitle {
-    color: white;
-
-    font-size: 29px;
-    font-weight: bold;
-
-    text-shadow:
-        3px 3px black;
-}
-
-.timerSmiley {
-    width: 240px;
-
-    max-width: 70vw;
-
-    margin: 20px;
-
-    filter:
-        drop-shadow(
-            10px 12px 5px
-            rgba(0,0,0,.4)
-        );
-
-    animation:
-        timerFloat
-        3s ease-in-out infinite;
-}
-
-@keyframes timerFloat {
-
-    0%,
-    100% {
-        transform:
-            translateY(0);
-    }
-
-    50% {
-        transform:
-            translateY(-15px);
-    }
-}
-
-/* =========================================================
-   CONTADOR
-========================================================= */
-
-#countdown {
-    max-width: 1050px;
-
-    margin:
-        25px auto 40px;
-
-    display: flex;
-
-    justify-content: center;
-
-    flex-wrap: wrap;
-
-    gap: 15px;
-}
-
-.timeUnit {
-    min-width: 155px;
-
-    padding: 20px;
-
-    background: #111;
-
-    color: white;
-
-    border:
-        5px solid #ffe600;
-
-    border-radius: 18px;
-
-    box-shadow:
-        7px 7px 0
-        rgba(0,0,0,.35);
-}
-
-.timeUnit strong {
-    display: block;
-
-    color: #ffe600;
-
-    font-size: 43px;
-}
-
-.timeUnit span {
-    font-size: 14px;
-
-    font-weight: bold;
-}
-
-#language {
-    min-width: 230px;
-
-    padding:
-        13px 20px;
-
-    border:
-        4px solid #111;
-
-    border-radius: 14px;
-
-    background: white;
-
-    font-size: 18px;
-
-    cursor: pointer;
-}
-
-/* =========================================================
-   GALERÍA
-========================================================= */
-
-#gallery {
-    min-height: 100vh;
-
-    padding:
-        110px 20px 80px;
-
-    text-align: center;
-
-    background-color: #ffe600;
-
-    background-image:
-        url("56 sin título_20260922190655.png");
-
-    background-repeat: repeat;
-
-    background-size: 400px;
-}
-
-#gallery h1 {
-    margin: 20px;
-
-    color: white;
-
-    font-size:
-        clamp(60px,10vw,120px);
-
-    -webkit-text-stroke:
-        5px #d7bf00;
-
-    text-shadow:
-        5px 5px black;
-}
-
-.galleryContainer {
-    max-width: 1300px;
-
-    margin: auto;
-
-    display: flex;
-
-    justify-content: center;
-
-    flex-wrap: wrap;
-
-    gap: 35px;
-}
-
-.galleryCard {
-    width:
-        min(520px,90vw);
-
-    padding: 35px;
-
-    background:
-        rgba(255,255,255,.86);
-
-    border:
-        5px solid white;
-
-    border-radius: 30px;
-
-    box-shadow:
-        10px 10px 0
-        rgba(0,0,0,.25);
-
-    transition:
-        transform .2s,
-        box-shadow .2s;
-}
-
-.galleryCard:hover {
-    transform:
-        translateY(-8px)
-        rotate(-1deg);
-
-    box-shadow:
-        15px 17px 0
-        rgba(0,0,0,.25);
-}
-
-.galleryCard img {
-    display: block;
-
-    width: 100%;
-
-    max-height: 430px;
-
-    margin: auto;
-
-    object-fit: contain;
-
-    border-radius: 15px;
-}
-
-.galleryCard h2 {
-    margin-bottom: 0;
-
-    font-size: 35px;
-}
-
-/* =========================================================
-   MÓVIL
-========================================================= */
-
-@media(max-width:700px) {
-
-    nav {
-        padding:
-            0 10px;
-
-        gap: 9px;
-    }
-
-    .logo {
-        font-size: 15px;
-    }
-
-    .navButton {
-        font-size: 13px;
-    }
-
-    #smileyCompanion {
-        width: 135px;
-
-        left: 10px;
-
-        bottom: 10px;
-    }
-
-    #companionDialogue {
-        left: 105px;
-
-        bottom: 50px;
-
-        width: 215px;
-
-        padding: 13px;
-
-        font-size: 14px;
-    }
-
-    .timeUnit {
-        min-width: 125px;
-    }
-
-    .galleryCard {
-        padding: 20px;
-    }
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smiley Timer</title>
+    <style>
+        /* =========================================================
+           ESTILOS GENERALES
+        ========================================================= */
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            background: #ffe600;
+        }
+
+        button,
+        select {
+            font-family: inherit;
+        }
+
+        /* =========================================================
+           NAVEGACIÓN
+        ========================================================= */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            padding: 0 28px;
+            background: rgba(15, 15, 15, 0.96);
+            border-bottom: 3px solid #ffe600;
+            z-index: 100000;
+        }
+
+        .logo {
+            margin-right: auto;
+            color: white;
+            font-size: 27px;
+            font-weight: bold;
+            -webkit-text-stroke: 1.5px #ffe600;
+            text-shadow: 2px 2px #000, 0 0 10px #ffe600;
+        }
+
+        .navButton {
+            border: 0;
+            background: transparent;
+            color: white;
+            font-size: 19px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, color 0.2s;
+        }
+
+        .navButton:hover {
+            color: #ffe600;
+            transform: scale(1.08);
+        }
+
+        .navButton.active {
+            color: #ffe600;
+            text-decoration: underline;
+        }
+
+        /* =========================================================
+           ESTRUCTURA DE PÁGINAS
+        ========================================================= */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* =========================================================
+           SECCIÓN: EXPLORAR
+        ========================================================= */
+        #explore {
+            position: relative;
+            min-height: 85000px;
+            background-color: #ffe600;
+            background-image: url("56 sin título_20260922190604.png");
+            background-repeat: repeat;
+            background-size: 520px;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 110px 20px 30px;
+            position: relative;
+            z-index: 20;
+        }
+
+        .hero h1 {
+            margin: 0;
+            color: white;
+            font-size: clamp(60px, 10vw, 135px);
+            -webkit-text-stroke: 5px #e3cc00;
+            text-shadow: 6px 6px #000, 0 0 15px white;
+        }
+
+        .hero p {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            text-shadow: 3px 3px black;
+        }
+
+        .arrow {
+            margin-top: 25px;
+            color: white;
+            font-size: 55px;
+            text-shadow: 3px 3px black;
+            animation: arrow 1s infinite alternate;
+        }
+
+        @keyframes arrow {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(15px);
+            }
+        }
+
+        .explorationSpace {
+            height: 76000px;
+        }
+
+        /* =========================================================
+           COMPANION / PERSONAJE
+        ========================================================= */
+        #smileyCompanion {
+            position: fixed;
+            left: 35px;
+            bottom: 25px;
+            width: 230px;
+            z-index: 6000;
+            pointer-events: none;
+            opacity: 1;
+            visibility: visible;
+            transition: transform 0.3s;
+        }
+
+        #companionSprite {
+            display: block;
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            opacity: 1;
+            filter: drop-shadow(8px 10px 4px rgba(0, 0, 0, 0.45));
+        }
+
+        #companionDialogue {
+            position: absolute;
+            left: 205px;
+            bottom: 85px;
+            width: 380px;
+            display: none;
+            padding: 20px 23px;
+            background: white;
+            border: 5px solid #e7cf00;
+            border-radius: 20px;
+            color: #111;
+            font-size: 20px;
+            font-weight: bold;
+            box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        /* =========================================================
+           EFECTOS VISUALES Y FINAL
+        ========================================================= */
+        #darkness {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle, rgba(70, 0, 0, 0.25), rgba(80, 0, 0, 0.95));
+            opacity: 0;
+            pointer-events: none;
+            z-index: 3000;
+        }
+
+        body.glitching {
+            animation: screenGlitch 0.08s infinite;
+        }
+
+        body.glitching::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 999999;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(255, 0, 0, 0.16) 0,
+                rgba(255, 0, 0, 0.16) 2px,
+                transparent 2px,
+                transparent 8px
+            );
+        }
+
+        @keyframes screenGlitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(4px, -1px); }
+            40% { transform: translate(-5px, 2px); }
+            60% { transform: translate(3px, 2px); }
+            80% { transform: translate(-2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .dialogueGlitch {
+            animation: dialogueGlitch 0.12s infinite;
+        }
+
+        @keyframes dialogueGlitch {
+            0% { transform: translate(0); }
+            25% { transform: translate(3px, -2px); }
+            50% { transform: translate(-3px, 1px); }
+            75% { transform: translate(2px, 2px); }
+            100% { transform: translate(0); }
+        }
+
+        #ending {
+            min-height: 100vh;
+            position: relative;
+            z-index: 5000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-image: url("57 sin título_20260922191646.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .endBox {
+            padding: 45px;
+        }
+
+        .endBox h2 {
+            margin: 0;
+            color: white;
+            font-size: clamp(50px, 8vw, 105px);
+            -webkit-text-stroke: 4px #ffe600;
+            text-shadow: 5px 5px black;
+        }
+
+        .endBox p {
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            text-shadow: 3px 3px black;
+        }
+
+        .secret {
+            margin-top: 150px;
+            color: black !important;
+            opacity: 0.09;
+            font-size: 17px !important;
+            text-shadow: none !important;
+        }
+
+        /* =========================================================
+           SECCIÓN: TIMER
+        ========================================================= */
+        #timer {
+            min-height: 100vh;
+            background-color: #ffe600;
+            background-image: url("56 sin título_20260922190655.png");
+            background-repeat: repeat;
+            background-size: 450px;
+        }
+
+        .timerPage {
+            min-height: 100vh;
+            padding: 120px 20px 70px;
+            text-align: center;
+        }
+
+        .timerPage h1 {
+            margin: 0;
+            color: white;
+            font-size: clamp(60px, 10vw, 125px);
+            -webkit-text-stroke: 5px #d7c000;
+            text-shadow: 6px 6px black;
+        }
+
+        #timerSubtitle {
+            color: white;
+            font-size: 29px;
+            font-weight: bold;
+            text-shadow: 3px 3px black;
+        }
+
+        .timerSmiley {
+            width: 240px;
+            max-width: 70vw;
+            margin: 20px;
+            filter: drop-shadow(10px 12px 5px rgba(0, 0, 0, 0.4));
+            animation: timerFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes timerFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        #countdown {
+            max-width: 1050px;
+            margin: 25px auto 40px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .timeUnit {
+            min-width: 155px;
+            padding: 20px;
+            background: #111;
+            color: white;
+            border: 5px solid #ffe600;
+            border-radius: 18px;
+            box-shadow: 7px 7px 0 rgba(0, 0, 0, 0.35);
+        }
+
+        .timeUnit strong {
+            display: block;
+            color: #ffe600;
+            font-size: 43px;
+        }
+
+        .timeUnit span {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        #language {
+            min-width: 230px;
+            padding: 13px 20px;
+            border: 4px solid #111;
+            border-radius: 14px;
+            background: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        /* =========================================================
+           SECCIÓN: GALERÍA
+        ========================================================= */
+        #gallery {
+            min-height: 100vh;
+            padding: 110px 20px 80px;
+            text-align: center;
+            background-color: #ffe600;
+            background-image: url("56 sin título_20260922190655.png");
+            background-repeat: repeat;
+            background-size: 400px;
+        }
+
+        #gallery h1 {
+            margin: 20px;
+            color: white;
+            font-size: clamp(60px, 10vw, 120px);
+            -webkit-text-stroke: 5px #d7bf00;
+            text-shadow: 5px 5px black;
+        }
+
+        .galleryContainer {
+            max-width: 1300px;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 35px;
+        }
+
+        .galleryCard {
+            width: min(520px, 90vw);
+            padding: 35px;
+            background: rgba(255, 255, 255, 0.86);
+            border: 5px solid white;
+            border-radius: 30px;
+            box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.25);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .galleryCard:hover {
+            transform: translateY(-8px) rotate(-1deg);
+            box-shadow: 15px 17px 0 rgba(0, 0, 0, 0.25);
+        }
+
+        .galleryCard img {
+            display: block;
+            width: 100%;
+            max-height: 430px;
+            margin: auto;
+            object-fit: contain;
+            border-radius: 15px;
+        }
+
+        .galleryCard h2 {
+            margin-bottom: 0;
+            font-size: 35px;
+        }
+
+        /* =========================================================
+           DISEÑO RESPONSIVO (MÓVIL)
+        ========================================================= */
+        @media (max-width: 700px) {
+            nav {
+                padding: 0 10px;
+                gap: 9px;
+            }
+
+            .logo {
+                font-size: 15px;
+            }
+
+            .navButton {
+                font-size: 13px;
+            }
+
+            #smileyCompanion {
+                width: 135px;
+                left: 10px;
+                bottom: 10px;
+            }
+
+            #companionDialogue {
+                left: 105px;
+                bottom: 50px;
+                width: 215px;
+                padding: 13px;
+                font-size: 14px;
+            }
+
+            .timeUnit {
+                min-width: 125px;
+            }
+
+            .galleryCard {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- =====================================================
-     NAVEGACIÓN
-===================================================== -->
+    <!-- =========================================================
+         NAVEGACIÓN
+    ========================================================= -->
+    <nav>
+        <div class="logo">Smiley Timer ☺</div>
+        <button id="exploreButton" class="navButton active" onclick="showPage('explore')">Explorar</button>
+        <button id="timerButton" class="navButton" onclick="showPage('timer')">Timer</button>
+        <button id="galleryButton" class="navButton" onclick="showPage('gallery')">Galería</button>
+    </nav>
 
-<nav>
+    <!-- =========================================================
+         PÁGINA: EXPLORAR
+    ========================================================= -->
+    <main id="explore" class="page active">
+        <section class="hero">
+            <h1>Smiley Timer</h1>
+            <p>Scroll down and explore!</p>
+            <div class="arrow">↓</div>
+        </section>
 
-    <div class="logo">
-        Smiley Timer ☺
+        <div class="explorationSpace"></div>
+
+        <section id="ending">
+            <div class="endBox">
+                <h2>Congratulations!</h2>
+                <p>You've reached the end of the page!</p>
+                <p class="secret">he is watching us</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- =========================================================
+         PERSONAJE Y EFECTOS
+    ========================================================= -->
+    <div id="smileyCompanion">
+        <img id="companionSprite" src="56 sin título_20260922190504.png" alt="Smiley">
+        <div id="companionDialogue"></div>
     </div>
 
-    <button
-        id="exploreButton"
-        class="navButton active"
-        onclick="showPage('explore')">
+    <div id="darkness"></div>
 
-        Explorar
+    <!-- =========================================================
+         PÁGINA: TIMER
+    ========================================================= -->
+    <main id="timer" class="page">
+        <section class="timerPage">
+            <h1>Smiley Timer</h1>
+            <p id="timerSubtitle">Time until the year 3524</p>
+            <img src="56 sin título_20260922190504.png" class="timerSmiley" alt="Smiley">
 
-    </button>
-
-    <button
-        id="timerButton"
-        class="navButton"
-        onclick="showPage('timer')">
-
-        Timer
-
-    </button>
-
-    <button
-        id="galleryButton"
-        class="navButton"
-        onclick="showPage('gallery')">
-
-        Galería
-
-    </button>
-
-</nav>
-
-<!-- =====================================================
-     EXPLORAR
-===================================================== -->
-
-<main
-    id="explore"
-    class="page active">
-
-    <section class="hero">
-
-        <h1>
-            Smiley Timer
-        </h1>
-
-        <p>
-            Scroll down and explore!
-        </p>
-
-        <div class="arrow">
-            ↓
-        </div>
-
-    </section>
-
-    <div class="explorationSpace"></div>
-
-    <section id="ending">
-
-        <div class="endBox">
-
-            <h2>
-                Congratulations!
-            </h2>
-
-            <p>
-                You've reached the end of the page!
-            </p>
-
-            <p class="secret">
-                he is watching us
-            </p>
-
-        </div>
-
-    </section>
-
-</main>
-
-<!-- =====================================================
-     PERSONAJE
-===================================================== -->
-
-<div id="smileyCompanion">
-
-    <img
-        id="companionSprite"
-        src="56 sin título_20260922190504.png"
-        alt="Smiley">
-
-    <div
-        id="companionDialogue">
-    </div>
-
-</div>
-
-<div id="darkness"></div>
-
-<!-- =====================================================
-     TIMER
-===================================================== -->
-
-<main
-    id="timer"
-    class="page">
-
-    <section class="timerPage">
-
-        <h1>
-            Smiley Timer
-        </h1>
-
-        <p id="timerSubtitle">
-            Time until the year 3524
-        </p>
-
-        <img
-            src="56 sin título_20260922190504.png"
-            class="timerSmiley"
-            alt="Smiley">
-
-        <div id="countdown">
-
-            <div class="timeUnit">
-
-                <strong id="years">
-                    0
-                </strong>
-
-                <span id="yearsLabel">
-                    YEARS
-                </span>
-
+            <div id="countdown">
+                <div class="timeUnit">
+                    <strong id="years">0</strong>
+                    <span id="yearsLabel">YEARS</span>
+                </div>
+                <div class="timeUnit">
+                    <strong id="days">0</strong>
+                    <span id="daysLabel">DAYS</span>
+                </div>
+                <div class="timeUnit">
+                    <strong id="hours">00</strong>
+                    <span id="hoursLabel">HOURS</span>
+                </div>
+                <div class="timeUnit">
+                    <strong id="minutes">00</strong>
+                    <span id="minutesLabel">MINUTES</span>
+                </div>
+                <div class="timeUnit">
+                    <strong id="seconds">00</strong>
+                    <span id="secondsLabel">SECONDS</span>
+                </div>
             </div>
 
-            <div class="timeUnit">
+            <select id="language">
+                <option value="auto">🌐 Auto</option>
+                <option value="es">Español</option>
+                <option value="en">English</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="pt">Português</option>
+                <option value="it">Italiano</option>
+                <option value="nl">Nederlands</option>
+                <option value="ru">Русский</option>
+                <option value="ja">日本語</option>
+                <option value="ko">한국어</option>
+                <option value="zh">中文</option>
+            </select>
+        </section>
+    </main>
 
-                <strong id="days">
-                    0
-                </strong>
-
-                <span id="daysLabel">
-                    DAYS
-                </span>
-
+    <!-- =========================================================
+         PÁGINA: GALERÍA
+    ========================================================= -->
+    <main id="gallery" class="page">
+        <h1 id="galleryTitle">Galería</h1>
+        <div class="galleryContainer">
+            <div class="galleryCard">
+                <img src="58 sin título_20260922192359.png" alt="Smiley Cube">
+                <h2>Smiley Cube</h2>
             </div>
-
-            <div class="timeUnit">
-
-                <strong id="hours">
-                    00
-                </strong>
-
-                <span id="hoursLabel">
-                    HOURS
-                </span>
-
+            <div class="galleryCard">
+                <img src="a98c128d37aefc208b794e092faa478b.jpg" alt="Touhou">
+                <h2>la de touhou xd</h2>
             </div>
-
-            <div class="timeUnit">
-
-                <strong id="minutes">
-                    00
-                </strong>
-
-                <span id="minutesLabel">
-                    MINUTES
-                </span>
-
-            </div>
-
-            <div class="timeUnit">
-
-                <strong id="seconds">
-                    00
-                </strong>
-
-                <span id="secondsLabel">
-                    SECONDS
-                </span>
-
-            </div>
-
         </div>
-
-        <select id="language">
-
-            <option value="auto">
-                🌐 Auto
-            </option>
-
-            <option value="es">
-                Español
-            </option>
-
-            <option value="en">
-                English
-            </option>
-
-            <option value="fr">
-                Français
-            </option>
-
-            <option value="de">
-                Deutsch
-            </option>
-
-            <option value="pt">
-                Português
-            </option>
-
-            <option value="it">
-                Italiano
-            </option>
-
-            <option value="nl">
-                Nederlands
-            </option>
-
-            <option value="ru">
-                Русский
-            </option>
-
-            <option value="ja">
-                日本語
-            </option>
-
-            <option value="ko">
-                한국어
-            </option>
-
-            <option value="zh">
-                中文
-            </option>
-
-        </select>
-
-    </section>
-
-</main>
-
-<!-- =====================================================
-     GALERÍA
-===================================================== -->
-
-<main
-    id="gallery"
-    class="page">
-
-    <h1 id="galleryTitle">
-        Galería
-    </h1>
-
-    <div class="galleryContainer">
-
-        <div class="galleryCard">
-
-            <img
-                src="58 sin título_20260922192359.png"
-                alt="Smiley Cube">
-
-            <h2>
-                Smiley Cube
-            </h2>
-
-        </div>
-
-        <div class="galleryCard">
-
-            <img
-                src="a98c128d37aefc208b794e092faa478b.jpg"
-                alt="Touhou">
-
-            <h2>
-                la de touhou xd
-            </h2>
-
-        </div>
-
-    </div>
-
-</main>
-
-<script>
-
-/* =========================================================
-   CONFIGURACIÓN DE SPRITES
-========================================================= */
-
-/*
-    Cara normal.
-
-    Después de cualquiera de los eventos raros,
-    SIEMPRE regresamos a esta imagen.
-*/
-
-const NORMAL_SPRITE =
-    "56 sin título_20260922190504.png";
-
-/*
-    Cara que habla normalmente.
-*/
-
-const TALKING_SPRITE =
-    "58 sin título_20260922191951.png";
-
-/*
-    LOS DOS SPRITES QUE MANDASTE.
-
-    Tienen 10% de probabilidad de aparecer
-    cuando se realiza una comprobación.
-
-    Aparecen durante 2 segundos.
-*/
-
-const RANDOM_SPRITES = [
-
-    "58 sin título_20260922192122.png",
-
-    "58 sin título_20260922192057.png"
-
-];
-
-/*
-    Probabilidad:
-
-    0.10 = 10%
-*/
-
-const RANDOM_CHANCE =
-    0.10;
-
-/*
-    Duración:
-
-    2000 ms = 2 segundos
-*/
-
-const RANDOM_DURATION =
-    2000;
-
-/*
-    Cada cuánto se comprueba
-    si ocurre el evento.
-
-    5000 = cada 5 segundos.
-*/
-
-const RANDOM_CHECK_INTERVAL =
-    5000;
-
-/* =========================================================
-   CONSOLA
-========================================================= */
-
-console.log(
-    "%cWhat are you looking at, huh?",
-    "font-size:26px;font-weight:bold;color:#ffe600;background:#111;padding:10px;"
-);
-
-console.log(
-    "%cWell, you won't find anything hidden here.",
-    "font-size:16px;color:white;background:#111;padding:6px;"
-);
-
-setTimeout(() => {
-
-    console.log(
-        "%cOr will you?",
-        "font-size:13px;color:#777;font-style:italic;"
-    );
-
-},2500);
-
-/* =========================================================
-   ELEMENTOS
-========================================================= */
-
-const explore =
-    document.getElementById(
-        "explore"
-    );
-
-const companion =
-    document.getElementById(
-        "smileyCompanion"
-    );
-
-const sprite =
-    document.getElementById(
-        "companionSprite"
-    );
-
-const dialogue =
-    document.getElementById(
-        "companionDialogue"
-    );
-
-const darkness =
-    document.getElementById(
-        "darkness"
-    );
-
-/* =========================================================
-   ASEGURAR QUE EL PERSONAJE SEA VISIBLE
-========================================================= */
-
-function forceCharacterVisible() {
-
-    if(
-        explore.classList.contains(
-            "active"
-        )
-    ) {
-
-        companion.style.display =
-            "block";
-
-        companion.style.opacity =
-            "1";
-
-        companion.style.visibility =
-            "visible";
-
-    }
-}
-
-/* =========================================================
-   CAMBIAR PÁGINAS
-========================================================= */
-
-function showPage(name) {
-
-    document
-        .querySelectorAll(".page")
-        .forEach(page => {
-
-            page.classList.remove(
-                "active"
-            );
-
-        });
-
-    document
-        .querySelectorAll(".navButton")
-        .forEach(button => {
-
-            button.classList.remove(
-                "active"
-            );
-
-        });
-
-    document
-        .getElementById(name)
-        .classList.add(
-            "active"
-        );
-
-    document
-        .getElementById(
-            name + "Button"
-        )
-        ?.classList.add(
-            "active"
-        );
-
-    window.scrollTo({
-        top: 0,
-        behavior: "auto"
-    });
-
-    if(name === "explore") {
-
-        forceCharacterVisible();
-
-        sprite.src =
-            NORMAL_SPRITE;
-
-        dialogue.style.display =
-            "none";
-
-        dialogue.textContent =
-            "";
-
-        setTimeout(
-            updateExplore,
-            20
-        );
-
-    }
-
-    else {
-
-        companion.style.display =
-            "none";
-
-        darkness.style.opacity =
-            "0";
-
-    }
-}
-
-/* =========================================================
-   EVENTO RARO DEL 10%
-========================================================= */
-
-let randomSpriteActive =
-    false;
-
-let randomSpriteTimeout =
-    null;
-
-function tryRandomSprite() {
-
-    /*
-        Solo puede ocurrir en Explorar.
-    */
-
-    if(
-        !explore.classList.contains(
-            "active"
-        )
-    ) {
-
-        return;
-
-    }
-
-    /*
-        Si ya hay una cara rara activa,
-        no iniciamos otra.
-    */
-
-    if(randomSpriteActive) {
-
-        return;
-
-    }
-
-    /*
-        10% de probabilidad.
-    */
-
-    if(
-        Math.random()
-        >=
-        RANDOM_CHANCE
-    ) {
-
-        return;
-
-    }
-
-    randomSpriteActive =
-        true;
-
-    forceCharacterVisible();
-
-    /*
-        Elegir aleatoriamente uno
-        de los dos sprites.
-    */
-
-    const randomIndex =
-        Math.floor(
-            Math.random()
-            *
-            RANDOM_SPRITES.length
-        );
-
-    sprite.src =
-        RANDOM_SPRITES[
-            randomIndex
+    </main>
+
+    <!-- =========================================================
+         LÓGICA JAVASCRIPT
+    ========================================================= -->
+    <script>
+        /* --- RUTA DE ARCHIVOS --- */
+        const NORMAL_SPRITE = "56 sin título_20260922190504.png";
+        const TALKING_SPRITE = "58 sin título_20260922191951.png";
+        const RANDOM_SPRITES = [
+            "58 sin título_20260922192122.png",
+            "58 sin título_20260922192057.png"
         ];
 
-    /*
-        Mientras aparece la cara rara
-        no mostramos diálogo.
-    */
+        /* --- CONFIGURACIÓN DE EVENTOS RAROS --- */
+        const RANDOM_CHANCE = 0.10;
+        const RANDOM_DURATION = 2000;
+        const RANDOM_CHECK_INTERVAL = 5000;
 
-    dialogue.style.display =
-        "none";
+        /* --- ELEMENTOS DEL DOM --- */
+        const explore = document.getElementById("explore");
+        const companion = document.getElementById("smileyCompanion");
+        const sprite = document.getElementById("companionSprite");
+        const dialogue = document.getElementById("companionDialogue");
+        const darkness = document.getElementById("darkness");
 
-    dialogue.textContent =
-        "";
-
-    /*
-        Después de EXACTAMENTE
-        2 segundos vuelve a callado.
-    */
-
-    clearTimeout(
-        randomSpriteTimeout
-    );
-
-    randomSpriteTimeout =
+        /* --- MENSAJES DE CONSOLA --- */
+        console.log(
+            "%cWhat are you looking at, huh?",
+            "font-size:26px;font-weight:bold;color:#ffe600;background:#111;padding:10px;"
+        );
+        console.log(
+            "%cWell, you won't find anything hidden here.",
+            "font-size:16px;color:white;background:#111;padding:6px;"
+        );
         setTimeout(() => {
+            console.log(
+                "%cOr will you?",
+                "font-size:13px;color:#777;font-style:italic;"
+            );
+        }, 2500);
 
-            sprite.src =
-                NORMAL_SPRITE;
+        /* --- MANTENER VISIBILIDAD DE PERSONAJE --- */
+        function forceCharacterVisible() {
+            if (explore.classList.contains("active")) {
+                companion.style.display = "block";
+                companion.style.opacity = "1";
+                companion.style.visibility = "visible";
+            }
+        }
 
-            dialogue.style.display =
-                "none";
+        /* --- GESTIÓN DE NAVEGACIÓN --- */
+        function showPage(name) {
+            document.querySelectorAll(".page").forEach(page => {
+                page.classList.remove("active");
+            });
 
-            dialogue.textContent =
-                "";
+            document.querySelectorAll(".navButton").forEach(button => {
+                button.classList.remove("active");
+            });
 
-            randomSpriteActive =
-                false;
+            document.getElementById(name).classList.add("active");
+            
+            const btn = document.getElementById(name + "Button");
+            if (btn) btn.classList.add("active");
+
+            window.scrollTo({ top: 0, behavior: "auto" });
+
+            if (name === "explore") {
+                forceCharacterVisible();
+                sprite.src = NORMAL_SPRITE;
+                dialogue.style.display = "none";
+                dialogue.textContent = "";
+                setTimeout(updateExplore, 20);
+            } else {
+                companion.style.display = "none";
+                darkness.style.opacity = "0";
+            }
+        }
+
+        /* --- SISTEMA DE EVENTO RARO (10%) --- */
+        let randomSpriteActive = false;
+        let randomSpriteTimeout = null;
+
+        function tryRandomSprite() {
+            if (!explore.classList.contains("active")) return;
+            if (randomSpriteActive) return;
+            if (Math.random() >= RANDOM_CHANCE) return;
+
+            randomSpriteActive = true;
+            forceCharacterVisible();
+
+            const randomIndex = Math.floor(Math.random() * RANDOM_SPRITES.length);
+            sprite.src = RANDOM_SPRITES[randomIndex];
+
+            dialogue.style.display = "none";
+            dialogue.textContent = "";
+
+            clearTimeout(randomSpriteTimeout);
+            randomSpriteTimeout = setTimeout(() => {
+                sprite.src = NORMAL_SPRITE;
+                dialogue.style.display = "none";
+                dialogue.textContent = "";
+                randomSpriteActive = false;
+                forceCharacterVisible();
+                
+                // Actualiza estado inmediatamente después de restablecer evento raro
+                updateExplore();
+            }, RANDOM_DURATION);
+        }
+
+        setInterval(tryRandomSprite, RANDOM_CHECK_INTERVAL);
+
+        /* --- ETAPAS DE SCROLL --- */
+        const stages = [
+            { start: 0, sprite: NORMAL_SPRITE, text: "" },
+            { start: 0.15, sprite: NORMAL_SPRITE, text: "" },
+            { start: 0.27, sprite: TALKING_SPRITE, text: "Looks like you're scrolling pretty far. If I were you, I wouldn't do that." },
+            { start: 0.38, sprite: NORMAL_SPRITE, text: "" },
+            { start: 0.48, sprite: TALKING_SPRITE, text: "What do you think you're doing?" },
+            { start: 0.54, sprite: NORMAL_SPRITE, text: "" },
+            { start: 0.61, sprite: TALKING_SPRITE, text: "Please stop." },
+            { start: 0.68, sprite: NORMAL_SPRITE, text: "" },
+            { start: 0.75, sprite: TALKING_SPRITE, text: "CAN ANYONE HEAR ME?" },
+            { start: 0.80, sprite: NORMAL_SPRITE, text: "" },
+            { start: 0.84, sprite: TALKING_SPRITE, text: "HELP" },
+            { start: 0.89, sprite: NORMAL_SPRITE, text: "" }
+        ];
+
+        let currentStage = -1;
+
+        function setStage(index) {
+            if (randomSpriteActive) return;
+            if (index === currentStage) return;
+
+            currentStage = index;
+            const stage = stages[index];
+            if (!stage) return;
+
+            forceCharacterVisible();
+            sprite.src = stage.sprite;
+
+            if (stage.text) {
+                dialogue.textContent = stage.text;
+                dialogue.style.display = "block";
+            } else {
+                dialogue.textContent = "";
+                dialogue.style.display = "none";
+            }
+
+            const deterioration = index / (stages.length - 1);
+            sprite.style.filter = `
+                contrast(${1 + deterioration * 0.6})
+                saturate(${1 + deterioration * 0.5})
+                drop-shadow(8px 10px 4px rgba(0,0,0,0.5))
+            `;
+
+            if (index >= 6) {
+                dialogue.classList.add("dialogueGlitch");
+                dialogue.style.background = "#080808";
+                dialogue.style.color = "#ff3333";
+                dialogue.style.borderColor = "#850000";
+            } else {
+                dialogue.classList.remove("dialogueGlitch");
+                dialogue.style.background = "white";
+                dialogue.style.color = "#111";
+                dialogue.style.borderColor = "#e7cf00";
+            }
+        }
+
+        /* --- LOGICA DE SCROLL --- */
+        function updateExplore() {
+            if (!explore.classList.contains("active")) return;
 
             forceCharacterVisible();
 
-        },RANDOM_DURATION);
-}
-
-/*
-    Cada 5 segundos hacemos
-    una comprobación del 10%.
-*/
-
-setInterval(
-    tryRandomSprite,
-    RANDOM_CHECK_INTERVAL
-);
-
-/* =========================================================
-   ETAPAS DE LA EXPLORACIÓN
-========================================================= */
-
-const stages = [
-
-    {
-        start: 0,
-
-        sprite:
-            NORMAL_SPRITE,
-
-        text: ""
-    },
-
-    {
-        start: .15,
-
-        sprite:
-            NORMAL_SPRITE,
-
-        text: ""
-    },
-
-    /*
-        PRIMER MENSAJE
-    */
-
-    {
-        start: .27,
-
-        sprite:
-            TALKING_SPRITE,
-
-        text:
-            "Looks like you're scrolling pretty far. If I were you, I wouldn't do that."
-    },
-
-    /*
-        VUELVE A CALLADO
-    */
-
-    {
-        start: .38,
-
-        sprite:
-            NORMAL_SPRITE,
-
-        text: ""
-    },
-
-    /*
-        HABLA
-    */
-
-    {
-        start: .48,
-
-        sprite:
-            TALKING_SPRITE,
-
-        text:
-            "What do you think you're doing?"
-    },
-
-    /*
-        CALLADO
-    */
-
-    {
-        start: .54,
-
-        sprite:
-            NORMAL_SPRITE,
-
-        text: ""
-    },
-
-    /*
-        HABLA
-    */
-
-    {
-        start: .61,
-
-        sprite:
-            TALKING_SPRITE,
-
-        text:
-            "Please stop."
-    },
-
-    /*
-        CALLADO
-    */
-
-    {
-        start: .68,
-
-        sprite:
-            NORMAL_SPRITE,
-
-        text: ""
-    },
-
-    /*
-        HABLA
-    */
-
-    {
-        start: .75,
-
-        sprite:
-            TALKING_SPRITE,
-
-        text:
-            "CAN ANYONE HEAR ME?"
-    },
-
-    /*
-        CALLADO
-    */
-
-    {
-        start: .80,
-
-        sprite:
-            NORMAL_SPRITE,
-
-        text: ""
-    },
-
-    /*
-        ÚLTIMO MENSAJE
-    */
-
-    {
-        start: .84,
-
-        sprite:
-            TALKING_SPRITE,
-
-        text:
-            "HELP"
-    },
-
-    /*
-        DESPUÉS DE HELP:
-        vuelve a la cara normal.
-    */
-
-    {
-        start: .89,
-
-        sprite:
-            NORMAL_SPRITE,
-
-        text: ""
-    }
-
-];
-
-let currentStage =
-    -1;
-
-/* =========================================================
-   CAMBIAR ETAPA
-========================================================= */
-
-function setStage(index) {
-
-    /*
-        MUY IMPORTANTE:
-
-        Si está ocurriendo uno de los
-        eventos raros de 2 segundos,
-        NO dejamos que el scroll
-        cambie la imagen.
-    */
-
-    if(randomSpriteActive) {
-
-        return;
-
-    }
-
-    if(
-        index === currentStage
-    ) {
-
-        return;
-
-    }
-
-    currentStage =
-        index;
-
-    const stage =
-        stages[index];
-
-    if(!stage) {
-
-        return;
-
-    }
-
-    forceCharacterVisible();
-
-    sprite.src =
-        stage.sprite;
-
-    /*
-        DIÁLOGO
-    */
-
-    if(stage.text) {
-
-        dialogue.textContent =
-            stage.text;
-
-        dialogue.style.display =
-            "block";
-
-    }
-
-    else {
-
-        dialogue.textContent =
-            "";
-
-        dialogue.style.display =
-            "none";
-
-    }
-
-    /*
-        EFECTO VISUAL MÁS OSCURO
-        CUANTO MÁS ABAJO ESTÉS.
-    */
-
-    const deterioration =
-        index /
-        (
-            stages.length - 1
-        );
-
-    sprite.style.filter = `
-        contrast(${1 + deterioration * .6})
-        saturate(${1 + deterioration * .5})
-        drop-shadow(
-            8px 10px 4px
-            rgba(0,0,0,.5)
-        )
-    `;
-
-    /*
-        DIÁLOGO ROJO
-        EN LA PARTE PROFUNDA.
-    */
-
-    if(index >= 6) {
-
-        dialogue.classList.add(
-            "dialogueGlitch"
-        );
-
-        dialogue.style.background =
-            "#080808";
-
-        dialogue.style.color =
-            "#ff3333";
-
-        dialogue.style.borderColor =
-            "#850000";
-
-    }
-
-    else {
-
-        dialogue.classList.remove(
-            "dialogueGlitch"
-        );
-
-        dialogue.style.background =
-            "white";
-
-        dialogue.style.color =
-            "#111";
-
-        dialogue.style.borderColor =
-            "#e7cf00";
-
-    }
-}
-
-/* =========================================================
-   GLITCH
-========================================================= */
-
-let glitchRunning =
-    false;
-
-function startGlitch() {
-
-    if(glitchRunning) {
-
-        return;
-
-    }
-
-    glitchRunning =
-        true;
-
-    document.body.classList.add(
-        "glitching"
-    );
-
-    setTimeout(() => {
-
-        document.body.classList.remove(
-            "glitching"
-        );
-
-        glitchRunning =
-            false;
-
-    },2000);
-}
-
-/* =========================================================
-   SCROLL
-========================================================= */
-
-function updateExplore() {
-
-    if(
-        !explore.classList.contains(
-            "active"
-        )
-    ) {
-
-        return;
-
-    }
-
-    /*
-        El personaje SIEMPRE
-        se mantiene visible.
-    */
-
-    forceCharacterVisible();
-
-    const maxScroll =
-        document.documentElement.scrollHeight
-        -
-        window.innerHeight;
-
-    if(maxScroll <= 0) {
-
-        return;
-
-    }
-
-    const progress =
-        Math.min(
-            1,
-            Math.max(
-                0,
-                window.scrollY
-                /
-                maxScroll
-            )
-        );
-
-    let stageIndex =
-        0;
-
-    for(
-        let i = 0;
-        i < stages.length;
-        i++
-    ) {
-
-        if(
-            progress >=
-            stages[i].start
-        ) {
-
-            stageIndex =
-                i;
-
-        }
-
-    }
-
-    /*
-        Solo cambiamos etapa si NO
-        hay evento raro activo.
-    */
-
-    if(
-        !randomSpriteActive
-    ) {
-
-        setStage(
-            stageIndex
-        );
-
-    }
-
-    /* =====================================================
-       OSCURIDAD
-    ===================================================== */
-
-    let amount =
-        0;
-
-    if(
-        progress >= .35
-        &&
-        progress < .65
-    ) {
-
-        amount =
-            (
-                progress - .35
-            )
-            /
-            (
-                .65 - .35
-            );
-
-        amount *=
-            .75;
-
-    }
-
-    else if(
-        progress >= .65
-        &&
-        progress < .86
-    ) {
-
-        amount =
-            .75;
-
-    }
-
-    /*
-        Después de HELP
-        vuelve a la normalidad.
-    */
-
-    else if(
-        progress >= .86
-        &&
-        progress < .94
-    ) {
-
-        amount =
-            .75 *
-            (
-                1 -
-                (
-                    (
-                        progress - .86
-                    )
-                    /
-                    (
-                        .94 - .86
-                    )
-                )
-            );
-
-    }
-
-    else if(
-        progress >= .94
-    ) {
-
-        amount =
-            0;
-
-    }
-
-    darkness.style.opacity =
-        Math.max(
-            0,
-            Math.min(
-                .75,
-                amount
-            )
-        );
-}
-
-window.addEventListener(
-    "scroll",
-    updateExplore,
-    {
-        passive: true
-    }
-);
-
-/* =========================================================
-   PROTECCIÓN EXTRA CONTRA DESAPARICIÓN
-========================================================= */
-
-/*
-    Cada segundo revisamos que el personaje
-    siga visible mientras estemos en Explorar.
-
-    Esto evita que algún estado anterior
-    pueda dejarlo invisible.
-*/
-
-setInterval(() => {
-
-    if(
-        explore.classList.contains(
-            "active"
-        )
-    ) {
-
-        forceCharacterVisible();
-
-    }
-
-},1000);
-
-/* =========================================================
-   SONIDO DEL FINAL
-========================================================= */
-
-const victorySound =
-    new Audio(
-        "freesound_community-goodresult-82807.mp3"
-    );
-
-let victoryPlayed =
-    false;
-
-const ending =
-    document.getElementById(
-        "ending"
-    );
-
-const endingObserver =
-    new IntersectionObserver(
-
-        entries => {
-
-            entries.forEach(
-                entry => {
-
-                    if(
-                        entry.isIntersecting
-                        &&
-                        !victoryPlayed
-                    ) {
-
-                        victoryPlayed =
-                            true;
-
-                        victorySound.currentTime =
-                            0;
-
-                        victorySound
-                            .play()
-                            .catch(
-                                () => {}
-                            );
-
-                    }
-
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            if (maxScroll <= 0) return;
+
+            const progress = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+            let stageIndex = 0;
+
+            for (let i = 0; i < stages.length; i++) {
+                if (progress >= stages[i].start) {
+                    stageIndex = i;
                 }
-            );
+            }
 
-        },
+            if (!randomSpriteActive) {
+                setStage(stageIndex);
+            }
 
-        {
-            threshold: .35
+            /* Gradiente de Oscuridad */
+            let amount = 0;
+            if (progress >= 0.35 && progress < 0.65) {
+                amount = ((progress - 0.35) / (0.65 - 0.35)) * 0.75;
+            } else if (progress >= 0.65 && progress < 0.86) {
+                amount = 0.75;
+            } else if (progress >= 0.86 && progress < 0.94) {
+                amount = 0.75 * (1 - ((progress - 0.86) / (0.94 - 0.86)));
+            } else if (progress >= 0.94) {
+                amount = 0;
+            }
+
+            darkness.style.opacity = Math.max(0, Math.min(0.75, amount));
         }
 
-    );
+        window.addEventListener("scroll", updateExplore, { passive: true });
 
-endingObserver.observe(
-    ending
-);
+        setInterval(() => {
+            if (explore.classList.contains("active")) {
+                forceCharacterVisible();
+            }
+        }, 1000);
 
-/* =========================================================
-   TIMER
-========================================================= */
+        /* --- SONIDO DE FINAL --- */
+        const victorySound = new Audio("freesound_community-goodresult-82807.mp3");
+        let victoryPlayed = false;
+        const ending = document.getElementById("ending");
 
-const targetDate =
-    new Date(
-        3524,
-        0,
-        1,
-        0,
-        0,
-        0
-    );
-
-function updateTimer() {
-
-    const now =
-        new Date();
-
-    let difference =
-        targetDate.getTime()
-        -
-        now.getTime();
-
-    if(
-        difference < 0
-    ) {
-
-        difference =
-            0;
-
-    }
-
-    const SECOND =
-        1000;
-
-    const MINUTE =
-        SECOND * 60;
-
-    const HOUR =
-        MINUTE * 60;
-
-    const DAY =
-        HOUR * 24;
-
-    const YEAR =
-        DAY * 365.2425;
-
-    const years =
-        Math.floor(
-            difference / YEAR
+        const endingObserver = new IntersectionObserver(
+            entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !victoryPlayed) {
+                        victoryPlayed = true;
+                        victorySound.currentTime = 0;
+                        victorySound.play().catch(() => {});
+                    }
+                });
+            },
+            { threshold: 0.35 }
         );
 
-    difference -=
-        years * YEAR;
-
-    const days =
-        Math.floor(
-            difference / DAY
-        );
-
-    difference -=
-        days * DAY;
-
-    const hours =
-        Math.floor(
-            difference / HOUR
-        );
-
-    difference -=
-        hours * HOUR;
-
-    const minutes =
-        Math.floor(
-            difference / MINUTE
-        );
-
-    difference -=
-        minutes * MINUTE;
-
-    const seconds =
-        Math.floor(
-            difference / SECOND
-        );
-
-    const locale =
-        getCurrentLocale();
-
-    document
-        .getElementById(
-            "years"
-        )
-        .textContent =
-        years.toLocaleString(
-            locale
-        );
-
-    document
-        .getElementById(
-            "days"
-        )
-        .textContent =
-        days.toLocaleString(
-            locale
-        );
-
-    document
-        .getElementById(
-            "hours"
-        )
-        .textContent =
-        String(hours)
-        .padStart(
-            2,
-            "0"
-        );
-
-    document
-        .getElementById(
-            "minutes"
-        )
-        .textContent =
-        String(minutes)
-        .padStart(
-            2,
-            "0"
-        );
-
-    document
-        .getElementById(
-            "seconds"
-        )
-        .textContent =
-        String(seconds)
-        .padStart(
-            2,
-            "0"
-        );
-}
-
-/* =========================================================
-   TRADUCCIONES
-========================================================= */
-
-const translations = {
-
-    es: {
-
-        explore:
-            "Explorar",
-
-        timer:
-            "Timer",
-
-        gallery:
-            "Galería",
-
-        subtitle:
-            "Tiempo hasta el año 3524",
-
-        years:
-            "AÑOS",
-
-        days:
-            "DÍAS",
-
-        hours:
-            "HORAS",
-
-        minutes:
-            "MINUTOS",
-
-        seconds:
-            "SEGUNDOS"
-
-    },
-
-    en: {
-
-        explore:
-            "Explore",
-
-        timer:
-            "Timer",
-
-        gallery:
-            "Gallery",
-
-        subtitle:
-            "Time until the year 3524",
-
-        years:
-            "YEARS",
-
-        days:
-            "DAYS",
-
-        hours:
-            "HOURS",
-
-        minutes:
-            "MINUTES",
-
-        seconds:
-            "SECONDS"
-
-    },
-
-    fr: {
-
-        explore:
-            "Explorer",
-
-        timer:
-            "Minuteur",
-
-        gallery:
-            "Galerie",
-
-        subtitle:
-            "Temps restant jusqu'à l'année 3524",
-
-        years:
-            "ANS",
-
-        days:
-            "JOURS",
-
-        hours:
-            "HEURES",
-
-        minutes:
-            "MINUTES",
-
-        seconds:
-            "SECONDES"
-
-    },
-
-    de: {
-
-        explore:
-            "Erkunden",
-
-        timer:
-            "Timer",
-
-        gallery:
-            "Galerie",
-
-        subtitle:
-            "Zeit bis zum Jahr 3524",
-
-        years:
-            "JAHRE",
-
-        days:
-            "TAGE",
-
-        hours:
-            "STUNDEN",
-
-        minutes:
-            "MINUTEN",
-
-        seconds:
-            "SEKUNDEN"
-
-    },
-
-    pt: {
-
-        explore:
-            "Explorar",
-
-        timer:
-            "Timer",
-
-        gallery:
-            "Galeria",
-
-        subtitle:
-            "Tempo até o ano 3524",
-
-        years:
-            "ANOS",
-
-        days:
-            "DIAS",
-
-        hours:
-            "HORAS",
-
-        minutes:
-            "MINUTOS",
-
-        seconds:
-            "SEGUNDOS"
-
-    },
-
-    it: {
-
-        explore:
-            "Esplora",
-
-        timer:
-            "Timer",
-
-        gallery:
-            "Galleria",
-
-        subtitle:
-            "Tempo fino all'anno 3524",
-
-        years:
-            "ANNI",
-
-        days:
-            "GIORNI",
-
-        hours:
-            "ORE",
-
-        minutes:
-            "MINUTI",
-
-        seconds:
-            "SECONDI"
-
-    },
-
-    nl: {
-
-        explore:
-            "Verkennen",
-
-        timer:
-            "Timer",
-
-        gallery:
-            "Galerij",
-
-        subtitle:
-            "Tijd tot het jaar 3524",
-
-        years:
-            "JAREN",
-
-        days:
-            "DAGEN",
-
-        hours:
-            "UREN",
-
-        minutes:
-            "MINUTEN",
-
-        seconds:
-            "SECONDEN"
-
-    },
-
-    ru: {
-
-        explore:
-            "Исследовать",
-
-        timer:
-            "Таймер",
-
-        gallery:
-            "Галерея",
-
-        subtitle:
-            "Время до 3524 года",
-
-        years:
-            "ЛЕТ",
-
-        days:
-            "ДНЕЙ",
-
-        hours:
-            "ЧАСОВ",
-
-        minutes:
-            "МИНУТ",
-
-        seconds:
-            "СЕКУНД"
-
-    },
-
-    ja: {
-
-        explore:
-            "探索",
-
-        timer:
-            "タイマー",
-
-        gallery:
-            "ギャラリー",
-
-        subtitle:
-            "3524年までの時間",
-
-        years:
-            "年",
-
-        days:
-            "日",
-
-        hours:
-            "時間",
-
-        minutes:
-            "分",
-
-        seconds:
-            "秒"
-
-    },
-
-    ko: {
-
-        explore:
-            "탐색",
-
-        timer:
-            "타이머",
-
-        gallery:
-            "갤러리",
-
-        subtitle:
-            "3524년까지 남은 시간",
-
-        years:
-            "년",
-
-        days:
-            "일",
-
-        hours:
-            "시간",
-
-        minutes:
-            "분",
-
-        seconds:
-            "초"
-
-    },
-
-    zh: {
-
-        explore:
-            "探索",
-
-        timer:
-            "计时器",
-
-        gallery:
-            "画廊",
-
-        subtitle:
-            "距离3524年的时间",
-
-        years:
-            "年",
-
-        days:
-            "天",
-
-        hours:
-            "小时",
-
-        minutes:
-            "分钟",
-
-        seconds:
-            "秒"
-
-    }
-
-};
-
-/* =========================================================
-   IDIOMA
-========================================================= */
-
-function getCurrentLocale() {
-
-    const selected =
-        document
-        .getElementById(
-            "language"
-        )
-        .value;
-
-    if(
-        selected === "auto"
-    ) {
-
-        return (
-            navigator.language
-            ||
-            "en"
-        );
-
-    }
-
-    return selected;
-}
-
-function translatePage() {
-
-    let language =
-        document
-        .getElementById(
-            "language"
-        )
-        .value;
-
-    if(
-        language === "auto"
-    ) {
-
-        language =
-            (
-                navigator.language
-                ||
-                "en"
-            )
-            .split("-")[0];
-
-    }
-
-    const t =
-        translations[language]
-        ||
-        translations.en;
-
-    document
-        .getElementById(
-            "exploreButton"
-        )
-        .textContent =
-        t.explore;
-
-    document
-        .getElementById(
-            "timerButton"
-        )
-        .textContent =
-        t.timer;
-
-    document
-        .getElementById(
-            "galleryButton"
-        )
-        .textContent =
-        t.gallery;
-
-    document
-        .getElementById(
-            "galleryTitle"
-        )
-        .textContent =
-        t.gallery;
-
-    document
-        .getElementById(
-            "timerSubtitle"
-        )
-        .textContent =
-        t.subtitle;
-
-    document
-        .getElementById(
-            "yearsLabel"
-        )
-        .textContent =
-        t.years;
-
-    document
-        .getElementById(
-            "daysLabel"
-        )
-        .textContent =
-        t.days;
-
-    document
-        .getElementById(
-            "hoursLabel"
-        )
-        .textContent =
-        t.hours;
-
-    document
-        .getElementById(
-            "minutesLabel"
-        )
-        .textContent =
-        t.minutes;
-
-    document
-        .getElementById(
-            "secondsLabel"
-        )
-        .textContent =
-        t.seconds;
-
-    updateTimer();
-}
-
-/* =========================================================
-   EVENTOS
-========================================================= */
-
-document
-    .getElementById(
-        "language"
-    )
-    .addEventListener(
-        "change",
-        translatePage
-    );
-
-/* =========================================================
-   INICIAR
-========================================================= */
-
-translatePage();
-
-updateTimer();
-
-setInterval(
-    updateTimer,
-    1000
-);
-
-/*
-    Inicia SIEMPRE con la
-    cara normal callada.
-*/
-
-sprite.src =
-    NORMAL_SPRITE;
-
-forceCharacterVisible();
-
-setStage(0);
-
-updateExplore();
-
-</script>
-
+        endingObserver.observe(ending);
+
+        /* --- TEMPORIZADOR AÑO 3524 --- */
+        const targetDate = new Date(3524, 0, 1, 0, 0, 0);
+
+        function updateTimer() {
+            const now = new Date();
+            let difference = targetDate.getTime() - now.getTime();
+
+            if (difference < 0) difference = 0;
+
+            const SECOND = 1000;
+            const MINUTE = SECOND * 60;
+            const HOUR = MINUTE * 60;
+            const DAY = HOUR * 24;
+            const YEAR = DAY * 365.2425;
+
+            const years = Math.floor(difference / YEAR);
+            difference -= years * YEAR;
+
+            const days = Math.floor(difference / DAY);
+            difference -= days * DAY;
+
+            const hours = Math.floor(difference / HOUR);
+            difference -= hours * HOUR;
+
+            const minutes = Math.floor(difference / MINUTE);
+            difference -= minutes * MINUTE;
+
+            const seconds = Math.floor(difference / SECOND);
+
+            const locale = getCurrentLocale();
+
+            document.getElementById("years").textContent = years.toLocaleString(locale);
+            document.getElementById("days").textContent = days.toLocaleString(locale);
+            document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+            document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+            document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+        }
+
+        /* --- TRADUCCIONES Y LENGUAJE --- */
+        const translations = {
+            es: { explore: "Explorar", timer: "Timer", gallery: "Galería", subtitle: "Tiempo hasta el año 3524", years: "AÑOS", days: "DÍAS", hours: "HORAS", minutes: "MINUTOS", seconds: "SEGUNDOS" },
+            en: { explore: "Explore", timer: "Timer", gallery: "Gallery", subtitle: "Time until the year 3524", years: "YEARS", days: "DAYS", hours: "HOURS", minutes: "MINUTES", seconds: "SECONDS" },
+            fr: { explore: "Explorer", timer: "Minuteur", gallery: "Galerie", subtitle: "Temps restant jusqu'à l'année 3524", years: "ANS", days: "JOURS", hours: "HEURES", minutes: "MINUTES", seconds: "SECONDES" },
+            de: { explore: "Erkunden", timer: "Timer", gallery: "Galerie", subtitle: "Zeit bis zum Jahr 3524", years: "JAHRE", days: "TAGE", hours: "STUNDEN", minutes: "MINUTEN", seconds: "SEKUNDEN" },
+            pt: { explore: "Explorar", timer: "Timer", gallery: "Galeria", subtitle: "Tempo até o ano 3524", years: "ANOS", days: "DIAS", hours: "HORAS", minutes: "MINUTOS", seconds: "SEGUNDOS" },
+            it: { explore: "Esplora", timer: "Timer", gallery: "Galleria", subtitle: "Tempo fino all'anno 3524", years: "ANNI", days: "GIORNI", hours: "ORE", minutes: "MINUTI", seconds: "SECONDI" },
+            nl: { explore: "Verkennen", timer: "Timer", gallery: "Galerij", subtitle: "Tijd tot het jaar 3524", years: "JAREN", days: "DAGEN", hours: "UREN", minutes: "SECONDEN" },
+            ru: { explore: "Исследовать", timer: "Таймер", gallery: "Галерея", subtitle: "Время до 3524 года", years: "ЛЕТ", days: "ДНЕЙ", hours: "ЧАСОВ", minutes: "МИНУТ", seconds: "СЕКУНД" },
+            ja: { explore: "探索", timer: "タイマー", gallery: "ギャラリー", subtitle: "3524年までの時間", years: "年", days: "日", hours: "時間", minutes: "分", seconds: "秒" },
+            ko: { explore: "탐색", timer: "타이머", gallery: "갤러리", subtitle: "3524년까지 남은 시간", years: "년", days: "일", hours: "시간", minutes: "분", seconds: "초" },
+            zh: { explore: "探索", timer: "计时器", gallery: "画廊", subtitle: "距离3524年的时间", years: "年", days: "天", hours: "小时", minutes: "分钟", seconds: "秒" }
+        };
+
+        function getCurrentLocale() {
+            const selected = document.getElementById("language").value;
+            if (selected === "auto") {
+                return navigator.language || "en";
+            }
+            return selected;
+        }
+
+        function translatePage() {
+            let language = document.getElementById("language").value;
+            if (language === "auto") {
+                language = (navigator.language || "en").split("-")[0];
+            }
+
+            const t = translations[language] || translations.en;
+
+            document.getElementById("exploreButton").textContent = t.explore;
+            document.getElementById("timerButton").textContent = t.timer;
+            document.getElementById("galleryButton").textContent = t.gallery;
+            document.getElementById("galleryTitle").textContent = t.gallery;
+            document.getElementById("timerSubtitle").textContent = t.subtitle;
+            document.getElementById("yearsLabel").textContent = t.years;
+            document.getElementById("daysLabel").textContent = t.days;
+            document.getElementById("hoursLabel").textContent = t.hours;
+            document.getElementById("minutesLabel").textContent = t.minutes;
+            document.getElementById("secondsLabel").textContent = t.seconds;
+
+            updateTimer();
+        }
+
+        document.getElementById("language").addEventListener("change", translatePage);
+
+        /* --- INICIALIZACIÓN --- */
+        translatePage();
+        updateTimer();
+        setInterval(updateTimer, 1000);
+
+        sprite.src = NORMAL_SPRITE;
+        forceCharacterVisible();
+        setStage(0);
+        updateExplore();
+    </script>
 </body>
 </html>
