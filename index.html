@@ -7,6 +7,11 @@
 <title>Smiley Timer</title>
 
 <style>
+
+/* =========================================================
+   GENERAL
+========================================================= */
+
 * {
     box-sizing: border-box;
 }
@@ -45,7 +50,7 @@ nav {
 
     padding: 0 28px;
 
-    background: rgba(15, 15, 15, 0.96);
+    background: rgba(15,15,15,.96);
     border-bottom: 3px solid #ffe600;
 
     z-index: 100000;
@@ -76,7 +81,7 @@ nav {
 
     cursor: pointer;
 
-    transition: 0.2s;
+    transition: .2s;
 }
 
 .navButton:hover {
@@ -113,9 +118,10 @@ nav {
     background-color: #ffe600;
 
     background-image:
-        url("assets/bg-pattern.png");
+        url("56 sin título_20260922190604.png");
 
     background-repeat: repeat;
+
     background-size: 520px;
 }
 
@@ -134,9 +140,11 @@ nav {
 
     text-align: center;
 
-    padding: 110px 20px 30px;
+    padding:
+        110px 20px 30px;
 
     position: relative;
+
     z-index: 20;
 }
 
@@ -145,9 +153,11 @@ nav {
 
     color: white;
 
-    font-size: clamp(60px, 10vw, 135px);
+    font-size:
+        clamp(60px,10vw,135px);
 
-    -webkit-text-stroke: 5px #e3cc00;
+    -webkit-text-stroke:
+        5px #e3cc00;
 
     text-shadow:
         6px 6px #000,
@@ -160,7 +170,8 @@ nav {
     font-size: 28px;
     font-weight: bold;
 
-    text-shadow: 3px 3px black;
+    text-shadow:
+        3px 3px black;
 }
 
 .arrow {
@@ -170,23 +181,28 @@ nav {
 
     font-size: 55px;
 
-    text-shadow: 3px 3px black;
+    text-shadow:
+        3px 3px black;
 
-    animation: arrow 1s infinite alternate;
+    animation:
+        arrow 1s infinite alternate;
 }
 
 @keyframes arrow {
+
     from {
-        transform: translateY(0);
+        transform:
+            translateY(0);
     }
 
     to {
-        transform: translateY(15px);
+        transform:
+            translateY(15px);
     }
 }
 
 /* =========================================================
-   ESPACIO GIGANTE
+   ESPACIO ENORME
 ========================================================= */
 
 .explorationSpace {
@@ -194,7 +210,7 @@ nav {
 }
 
 /* =========================================================
-   SMILEY FIJO
+   SMILEY COMPAÑERO
 ========================================================= */
 
 #smileyCompanion {
@@ -211,14 +227,14 @@ nav {
 
     transition:
         opacity 1s,
-        transform 1s,
-        filter 0.5s;
+        transform 1s;
 }
 
 #companionSprite {
     display: block;
 
     width: 100%;
+
     max-height: 300px;
 
     object-fit: contain;
@@ -230,9 +246,9 @@ nav {
         );
 
     transition:
-        filter 0.5s,
-        opacity 0.5s,
-        transform 0.2s;
+        filter .5s,
+        opacity .5s,
+        transform .2s;
 }
 
 /* =========================================================
@@ -253,7 +269,9 @@ nav {
 
     background: white;
 
-    border: 5px solid #e7cf00;
+    border:
+        5px solid #e7cf00;
+
     border-radius: 20px;
 
     color: #111;
@@ -264,20 +282,15 @@ nav {
     box-shadow:
         8px 8px 0
         rgba(0,0,0,.3);
-
-    transition:
-        filter 0.5s,
-        background 0.5s,
-        color 0.5s,
-        transform 0.2s;
 }
 
 /* =========================================================
-   OSCURIDAD
+   OSCURIDAD ROJA
 ========================================================= */
 
 #darkness {
     position: fixed;
+
     inset: 0;
 
     background:
@@ -299,13 +312,15 @@ nav {
 ========================================================= */
 
 body.glitching {
-    animation: screenGlitch 0.08s infinite;
+    animation:
+        screenGlitch .08s infinite;
 }
 
 body.glitching::after {
     content: "";
 
     position: fixed;
+
     inset: 0;
 
     z-index: 999999;
@@ -323,23 +338,65 @@ body.glitching::after {
 }
 
 @keyframes screenGlitch {
-    0% { transform: translate(0); }
-    20% { transform: translate(4px,-1px); }
-    40% { transform: translate(-5px,2px); }
-    60% { transform: translate(3px,2px); }
-    80% { transform: translate(-2px,-2px); }
-    100% { transform: translate(0); }
+
+    0% {
+        transform: translate(0);
+    }
+
+    20% {
+        transform:
+            translate(4px,-1px);
+    }
+
+    40% {
+        transform:
+            translate(-5px,2px);
+    }
+
+    60% {
+        transform:
+            translate(3px,2px);
+    }
+
+    80% {
+        transform:
+            translate(-2px,-2px);
+    }
+
+    100% {
+        transform: translate(0);
+    }
 }
 
 .dialogueGlitch {
-    animation: dialogueGlitch 0.12s infinite;
+    animation:
+        dialogueGlitch .12s infinite;
 }
 
 @keyframes dialogueGlitch {
-    0% { transform: translate(0); }
-    25% { transform: translate(3px,-2px); }
-    50% { transform: translate(-3px,1px); }
-    75% { transform: translate(2px,2px); }
+
+    0% {
+        transform: translate(0);
+    }
+
+    25% {
+        transform:
+            translate(3px,-2px);
+    }
+
+    50% {
+        transform:
+            translate(-3px,1px);
+    }
+
+    75% {
+        transform:
+            translate(2px,2px);
+    }
+
+    100% {
+        transform: translate(0);
+    }
 }
 
 /* =========================================================
@@ -350,6 +407,7 @@ body.glitching::after {
     min-height: 100vh;
 
     position: relative;
+
     z-index: 5000;
 
     display: flex;
@@ -359,16 +417,18 @@ body.glitching::after {
 
     text-align: center;
 
-    background-color: #ffe600;
-    background-image: url("assets/bg-pattern.png");
-    background-size: 520px;
-    background-repeat: repeat;
+    background-image:
+        url("57 sin título_20260922191646.png");
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
 }
 
 .endBox {
     padding: 45px;
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 25px;
 }
 
 .endBox h2 {
@@ -376,20 +436,25 @@ body.glitching::after {
 
     color: white;
 
-    font-size: clamp(50px, 8vw, 105px);
+    font-size:
+        clamp(50px,8vw,105px);
 
-    -webkit-text-stroke: 4px #ffe600;
+    -webkit-text-stroke:
+        4px #ffe600;
 
-    text-shadow: 5px 5px black;
+    text-shadow:
+        5px 5px black;
 }
 
 .endBox p {
     color: white;
 
     font-size: 30px;
+
     font-weight: bold;
 
-    text-shadow: 3px 3px black;
+    text-shadow:
+        3px 3px black;
 }
 
 .secret {
@@ -397,11 +462,13 @@ body.glitching::after {
 
     color: black !important;
 
-    opacity: 0.09;
+    opacity: .09;
 
-    font-size: 17px !important;
+    font-size:
+        17px !important;
 
-    text-shadow: none !important;
+    text-shadow:
+        none !important;
 }
 
 /* =========================================================
@@ -413,16 +480,19 @@ body.glitching::after {
 
     background-color: #ffe600;
 
-    background-image: url("assets/bg-texture.jpg");
+    background-image:
+        url("56 sin título_20260922190655.png");
 
     background-repeat: repeat;
+
     background-size: 450px;
 }
 
 .timerPage {
     min-height: 100vh;
 
-    padding: 120px 20px 70px;
+    padding:
+        120px 20px 70px;
 
     text-align: center;
 }
@@ -432,36 +502,57 @@ body.glitching::after {
 
     color: white;
 
-    font-size: clamp(60px, 10vw, 125px);
+    font-size:
+        clamp(60px,10vw,125px);
 
-    -webkit-text-stroke: 5px #d7c000;
+    -webkit-text-stroke:
+        5px #d7c000;
 
-    text-shadow: 6px 6px black;
+    text-shadow:
+        6px 6px black;
 }
 
 #timerSubtitle {
     color: white;
 
     font-size: 29px;
+
     font-weight: bold;
 
-    text-shadow: 3px 3px black;
+    text-shadow:
+        3px 3px black;
 }
 
 .timerSmiley {
     width: 240px;
+
     max-width: 70vw;
 
     margin: 20px;
 
-    filter: drop-shadow(10px 12px 5px rgba(0,0,0,.4));
+    filter:
+        drop-shadow(
+            10px 12px 5px
+            rgba(0,0,0,.4)
+        );
 
-    animation: timerFloat 3s ease-in-out infinite;
+    animation:
+        timerFloat
+        3s ease-in-out infinite;
 }
 
 @keyframes timerFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
+
+    0%,
+    100% {
+        transform:
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateY(-15px);
+    }
 }
 
 /* =========================================================
@@ -471,11 +562,13 @@ body.glitching::after {
 #countdown {
     max-width: 1050px;
 
-    margin: 25px auto 40px;
+    margin:
+        25px auto 40px;
 
     display: flex;
 
     justify-content: center;
+
     flex-wrap: wrap;
 
     gap: 15px;
@@ -490,10 +583,14 @@ body.glitching::after {
 
     color: white;
 
-    border: 5px solid #ffe600;
+    border:
+        5px solid #ffe600;
+
     border-radius: 18px;
 
-    box-shadow: 7px 7px 0 rgba(0,0,0,.35);
+    box-shadow:
+        7px 7px 0
+        rgba(0,0,0,.35);
 }
 
 .timeUnit strong {
@@ -506,15 +603,19 @@ body.glitching::after {
 
 .timeUnit span {
     font-size: 14px;
+
     font-weight: bold;
 }
 
 #language {
     min-width: 230px;
 
-    padding: 13px 20px;
+    padding:
+        13px 20px;
 
-    border: 4px solid #111;
+    border:
+        4px solid #111;
+
     border-radius: 14px;
 
     background: white;
@@ -531,15 +632,18 @@ body.glitching::after {
 #gallery {
     min-height: 100vh;
 
-    padding: 110px 20px 80px;
+    padding:
+        110px 20px 80px;
 
     text-align: center;
 
     background-color: #ffe600;
 
-    background-image: url("assets/bg-texture.jpg");
+    background-image:
+        url("56 sin título_20260922190655.png");
 
     background-repeat: repeat;
+
     background-size: 400px;
 }
 
@@ -548,11 +652,14 @@ body.glitching::after {
 
     color: white;
 
-    font-size: clamp(60px, 10vw, 120px);
+    font-size:
+        clamp(60px,10vw,120px);
 
-    -webkit-text-stroke: 5px #d7bf00;
+    -webkit-text-stroke:
+        5px #d7bf00;
 
-    text-shadow: 5px 5px black;
+    text-shadow:
+        5px 5px black;
 }
 
 .galleryContainer {
@@ -561,36 +668,57 @@ body.glitching::after {
     margin: auto;
 
     display: flex;
+
     justify-content: center;
+
     align-items: stretch;
+
     flex-wrap: wrap;
 
     gap: 35px;
 }
 
 .galleryCard {
-    width: min(520px, 90vw);
+    width:
+        min(520px,90vw);
 
     padding: 35px;
 
-    background: rgba(255,255,255,.84);
+    background:
+        rgba(255,255,255,.86);
 
-    border: 5px solid white;
+    border:
+        5px solid white;
+
     border-radius: 30px;
 
-    box-shadow: 10px 10px 0 rgba(0,0,0,.25);
+    box-shadow:
+        10px 10px 0
+        rgba(0,0,0,.25);
 
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition:
+        transform .2s,
+        box-shadow .2s;
 }
 
 .galleryCard:hover {
-    transform: translateY(-8px) rotate(-1deg);
-    box-shadow: 15px 17px 0 rgba(0,0,0,.25);
+    transform:
+        translateY(-8px)
+        rotate(-1deg);
+
+    box-shadow:
+        15px 17px 0
+        rgba(0,0,0,.25);
 }
 
 .galleryCard img {
+    display: block;
+
     width: 100%;
+
     max-height: 430px;
+
+    margin: auto;
 
     object-fit: contain;
 
@@ -608,8 +736,10 @@ body.glitching::after {
 ========================================================= */
 
 @media(max-width:700px) {
+
     nav {
         padding: 0 10px;
+
         gap: 9px;
     }
 
@@ -625,11 +755,13 @@ body.glitching::after {
         width: 135px;
 
         left: 10px;
+
         bottom: 10px;
     }
 
     #companionDialogue {
         left: 105px;
+
         bottom: 50px;
 
         width: 215px;
@@ -647,6 +779,7 @@ body.glitching::after {
         padding: 20px;
     }
 }
+
 </style>
 </head>
 
@@ -657,53 +790,112 @@ body.glitching::after {
 ===================================================== -->
 
 <nav>
+
     <div class="logo">
         Smiley Timer ☺
     </div>
 
-    <button id="exploreButton" class="navButton active" onclick="showPage('explore')">
+    <button
+        id="exploreButton"
+        class="navButton active"
+        onclick="showPage('explore')">
+
         Explorar
+
     </button>
 
-    <button id="timerButton" class="navButton" onclick="showPage('timer')">
+    <button
+        id="timerButton"
+        class="navButton"
+        onclick="showPage('timer')">
+
         Timer
+
     </button>
 
-    <button id="galleryButton" class="navButton" onclick="showPage('gallery')">
+    <button
+        id="galleryButton"
+        class="navButton"
+        onclick="showPage('gallery')">
+
         Galería
+
     </button>
+
 </nav>
 
 <!-- =====================================================
      EXPLORAR
 ===================================================== -->
 
-<main id="explore" class="page active">
+<main
+    id="explore"
+    class="page active">
+
     <section class="hero">
-        <h1>Smiley Timer</h1>
-        <p>Scroll down and explore!</p>
-        <div class="arrow">↓</div>
+
+        <h1>
+            Smiley Timer
+        </h1>
+
+        <p>
+            Scroll down and explore!
+        </p>
+
+        <div class="arrow">
+            ↓
+        </div>
+
     </section>
+
+    <!--
+        Muchísimo espacio para bajar.
+    -->
 
     <div class="explorationSpace"></div>
 
+    <!-- FINAL -->
+
     <section id="ending">
+
         <div class="endBox">
-            <h2>Congratulations!</h2>
-            <p>You've reached the end of the page!</p>
-            <p class="secret">he is watching us</p>
+
+            <h2>
+                Congratulations!
+            </h2>
+
+            <p>
+                You've reached the end of the page!
+            </p>
+
+            <p class="secret">
+                he is watching us
+            </p>
+
         </div>
+
     </section>
+
 </main>
 
 <!-- =====================================================
-     SMILEY PERMANENTE
+     SMILEY QUE ACOMPAÑA AL USUARIO
 ===================================================== -->
 
 <div id="smileyCompanion">
-    <img id="companionSprite" src="assets/smiley-normal.png" alt="Smiley">
-    <div id="companionDialogue"></div>
+
+    <img
+        id="companionSprite"
+        src="58 sin título_20260922192359.png"
+        alt="Smiley">
+
+    <div
+        id="companionDialogue">
+    </div>
+
 </div>
+
+<!-- OSCURIDAD -->
 
 <div id="darkness"></div>
 
@@ -711,79 +903,221 @@ body.glitching::after {
      TIMER
 ===================================================== -->
 
-<main id="timer" class="page">
-    <section class="timerPage">
-        <h1>Smiley Timer</h1>
-        <p id="timerSubtitle">Time until the year 3524</p>
+<main
+    id="timer"
+    class="page">
 
-        <img src="assets/smiley-normal.png" class="timerSmiley" alt="Smiley">
+    <section class="timerPage">
+
+        <h1>
+            Smiley Timer
+        </h1>
+
+        <p id="timerSubtitle">
+            Time until the year 3524
+        </p>
+
+        <img
+            src="58 sin título_20260922192359.png"
+            class="timerSmiley"
+            alt="Smiley">
 
         <div id="countdown">
+
             <div class="timeUnit">
-                <strong id="years">0</strong>
-                <span id="yearsLabel">YEARS</span>
+
+                <strong id="years">
+                    0
+                </strong>
+
+                <span id="yearsLabel">
+                    YEARS
+                </span>
+
             </div>
 
             <div class="timeUnit">
-                <strong id="days">0</strong>
-                <span id="daysLabel">DAYS</span>
+
+                <strong id="days">
+                    0
+                </strong>
+
+                <span id="daysLabel">
+                    DAYS
+                </span>
+
             </div>
 
             <div class="timeUnit">
-                <strong id="hours">00</strong>
-                <span id="hoursLabel">HOURS</span>
+
+                <strong id="hours">
+                    00
+                </strong>
+
+                <span id="hoursLabel">
+                    HOURS
+                </span>
+
             </div>
 
             <div class="timeUnit">
-                <strong id="minutes">00</strong>
-                <span id="minutesLabel">MINUTES</span>
+
+                <strong id="minutes">
+                    00
+                </strong>
+
+                <span id="minutesLabel">
+                    MINUTES
+                </span>
+
             </div>
 
             <div class="timeUnit">
-                <strong id="seconds">00</strong>
-                <span id="secondsLabel">SECONDS</span>
+
+                <strong id="seconds">
+                    00
+                </strong>
+
+                <span id="secondsLabel">
+                    SECONDS
+                </span>
+
             </div>
+
         </div>
 
         <select id="language">
-            <option value="auto">🌐 Auto</option>
-            <option value="es">Español</option>
-            <option value="en">English</option>
-            <option value="fr">Français</option>
-            <option value="de">Deutsch</option>
-            <option value="pt">Português</option>
-            <option value="it">Italiano</option>
-            <option value="nl">Nederlands</option>
-            <option value="pl">Polski</option>
-            <option value="ru">Русский</option>
-            <option value="ja">日本語</option>
-            <option value="ko">한국어</option>
-            <option value="zh">中文</option>
-            <option value="ar">العربية</option>
-            <option value="tr">Türkçe</option>
+
+            <option value="auto">
+                🌐 Auto
+            </option>
+
+            <option value="es">
+                Español
+            </option>
+
+            <option value="en">
+                English
+            </option>
+
+            <option value="fr">
+                Français
+            </option>
+
+            <option value="de">
+                Deutsch
+            </option>
+
+            <option value="pt">
+                Português
+            </option>
+
+            <option value="it">
+                Italiano
+            </option>
+
+            <option value="nl">
+                Nederlands
+            </option>
+
+            <option value="pl">
+                Polski
+            </option>
+
+            <option value="ru">
+                Русский
+            </option>
+
+            <option value="ja">
+                日本語
+            </option>
+
+            <option value="ko">
+                한국어
+            </option>
+
+            <option value="zh">
+                中文
+            </option>
+
+            <option value="ar">
+                العربية
+            </option>
+
+            <option value="tr">
+                Türkçe
+            </option>
+
         </select>
+
     </section>
+
 </main>
 
 <!-- =====================================================
      GALERÍA
 ===================================================== -->
 
-<main id="gallery" class="page">
-    <h1 id="galleryTitle">Galería</h1>
+<main
+    id="gallery"
+    class="page">
+
+    <h1 id="galleryTitle">
+        Galería
+    </h1>
 
     <div class="galleryContainer">
+
+        <!-- SMILEY CUBE -->
+
         <div class="galleryCard">
-            <img src="assets/smiley-gallery.png" alt="Smiley Pixel Art">
-            <h2>Smiley Pixel</h2>
+
+            <img
+                src="58 sin título_20260922191951.png"
+                alt="Smiley Cube">
+
+            <h2>
+                Smiley Cube
+            </h2>
+
         </div>
+
+        <!-- SMILEY SVG/WEBP -->
+
+        <div class="galleryCard">
+
+            <img
+                src="Smiley.svg.webp"
+                alt="Smiley">
+
+            <h2>
+                Smiley
+            </h2>
+
+        </div>
+
+        <!-- FOTO NUEVA -->
+
+        <div class="galleryCard">
+
+            <img
+                src="a98c128d37aefc208b794e092faa478b.jpg"
+                alt="Smiley">
+
+            <h2>
+                Smiley
+            </h2>
+
+        </div>
+
     </div>
+
 </main>
 
 <script>
 
 /* =========================================================
-   CONSOLA SECRETA
+   MENSAJES SECRETOS EN CONSOLA
 ========================================================= */
 
 console.log(
@@ -797,60 +1131,243 @@ console.log(
 );
 
 setTimeout(() => {
+
     console.log(
         "%cOr will you?",
         "font-size:13px;color:#777;font-style:italic;"
     );
-}, 2500);
+
+},2500);
 
 /* =========================================================
    ELEMENTOS
 ========================================================= */
 
-const explore = document.getElementById("explore");
-const companion = document.getElementById("smileyCompanion");
-const sprite = document.getElementById("companionSprite");
-const dialogue = document.getElementById("companionDialogue");
-const darkness = document.getElementById("darkness");
+const explore =
+    document.getElementById(
+        "explore"
+    );
+
+const companion =
+    document.getElementById(
+        "smileyCompanion"
+    );
+
+const sprite =
+    document.getElementById(
+        "companionSprite"
+    );
+
+const dialogue =
+    document.getElementById(
+        "companionDialogue"
+    );
+
+const darkness =
+    document.getElementById(
+        "darkness"
+    );
 
 /* =========================================================
-   CAMBIAR PÁGINA
+   CAMBIAR PÁGINAS
 ========================================================= */
 
 function showPage(name) {
-    document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
-    document.querySelectorAll(".navButton").forEach(button => button.classList.remove("active"));
 
-    document.getElementById(name).classList.add("active");
-    document.getElementById(name + "Button")?.classList.add("active");
+    document
+        .querySelectorAll(".page")
+        .forEach(page => {
 
-    if (name === "explore") {
-        companion.style.display = "block";
-    } else {
-        companion.style.display = "none";
-        darkness.style.opacity = "0";
+            page.classList.remove(
+                "active"
+            );
+
+        });
+
+    document
+        .querySelectorAll(".navButton")
+        .forEach(button => {
+
+            button.classList.remove(
+                "active"
+            );
+
+        });
+
+    document
+        .getElementById(name)
+        .classList.add(
+            "active"
+        );
+
+    document
+        .getElementById(
+            name + "Button"
+        )
+        ?.classList.add(
+            "active"
+        );
+
+    if(name === "explore") {
+
+        companion.style.display =
+            "block";
+
+        updateExplore();
+
     }
 
-    window.scrollTo(0, 0);
+    else {
+
+        companion.style.display =
+            "none";
+
+        darkness.style.opacity =
+            "0";
+
+    }
+
+    window.scrollTo({
+        top: 0,
+        behavior: "auto"
+    });
 }
 
 /* =========================================================
-   ETAPAS DEL PERSONAJE
+   ETAPAS DE SMILEY
+
+   ESTOS SON LOS NOMBRES REALES
+   QUE APARECEN EN TU GITHUB.
 ========================================================= */
 
 const stages = [
-    { start: 0, sprite: "assets/smiley-normal.png", text: "", glitch: false },
-    { start: .12, sprite: "assets/smiley-pixel.png", text: "", glitch: false },
-    { start: .25, sprite: "assets/smiley-eyes-talk.png", text: "Looks like you're scrolling pretty far. If I were you, I wouldn't do that.", glitch: true },
-    { start: .38, sprite: "assets/smiley-eyes-normal.png", text: "", glitch: true },
-    { start: .48, sprite: "assets/smiley-talk.png", text: "What do you think you're doing?", glitch: true },
-    { start: .58, sprite: "assets/smiley-glitch1.png", text: "Please stop.", glitch: true },
-    { start: .67, sprite: "assets/smiley-glitch1-talk.png", text: "", glitch: true },
-    { start: .74, sprite: "assets/smiley-glitch2-talk.png", text: "CAN ANYONE HEAR ME?", glitch: true },
-    { start: .81, sprite: "assets/smiley-pixel.png", text: "HELP", glitch: true }
+
+    /* NORMAL */
+
+    {
+        start: 0,
+
+        sprite:
+        "58 sin título_20260922192359.png",
+
+        text: "",
+
+        glitch: false
+    },
+
+    /* TODAVÍA NORMAL */
+
+    {
+        start: .12,
+
+        sprite:
+        "58 sin título_20260922192327.png",
+
+        text: "",
+
+        glitch: false
+    },
+
+    /* PRIMER AVISO */
+
+    {
+        start: .25,
+
+        sprite:
+        "58 sin título_20260922192057.png",
+
+        text:
+        "Looks like you're scrolling pretty far. If I were you, I wouldn't do that.",
+
+        glitch: true
+    },
+
+    /* SILENCIO */
+
+    {
+        start: .38,
+
+        sprite:
+        "58 sin título_20260922192122.png",
+
+        text: "",
+
+        glitch: true
+    },
+
+    /* SEGUNDO AVISO */
+
+    {
+        start: .48,
+
+        sprite:
+        "58 sin título_20260922192158.png",
+
+        text:
+        "What do you think you're doing?",
+
+        glitch: true
+    },
+
+    /* PLEASE STOP */
+
+    {
+        start: .58,
+
+        sprite:
+        "58 sin título_20260922192211.png",
+
+        text:
+        "Please stop.",
+
+        glitch: true
+    },
+
+    /* MÁS DETERIORADO */
+
+    {
+        start: .67,
+
+        sprite:
+        "58 sin título_20260922192229.png",
+
+        text: "",
+
+        glitch: true
+    },
+
+    /* CAN ANYONE HEAR ME */
+
+    {
+        start: .74,
+
+        sprite:
+        "58 sin título_20260922192238.png",
+
+        text:
+        "CAN ANYONE HEAR ME?",
+
+        glitch: true
+    },
+
+    /* HELP */
+
+    {
+        start: .81,
+
+        sprite:
+        "58 sin título_20260922192315.png",
+
+        text:
+        "HELP",
+
+        glitch: true
+    }
+
 ];
 
 let currentStage = -1;
+
 let characterGone = false;
 
 /* =========================================================
@@ -858,66 +1375,149 @@ let characterGone = false;
 ========================================================= */
 
 function setStage(index) {
-    if (index === currentStage) return;
+
+    if(
+        index === currentStage
+    ) {
+        return;
+    }
 
     currentStage = index;
-    const stage = stages[index];
-    if (!stage) return;
 
-    sprite.src = stage.sprite;
+    const stage =
+        stages[index];
 
-    if (stage.text) {
-        dialogue.textContent = stage.text;
-        dialogue.style.display = "block";
-    } else {
-        dialogue.textContent = "";
-        dialogue.style.display = "none";
+    if(!stage) {
+        return;
     }
 
-    const deterioration = index / (stages.length - 1);
+    sprite.src =
+        stage.sprite;
+
+    /* DIÁLOGO */
+
+    if(stage.text) {
+
+        dialogue.textContent =
+            stage.text;
+
+        dialogue.style.display =
+            "block";
+
+    }
+
+    else {
+
+        dialogue.textContent =
+            "";
+
+        dialogue.style.display =
+            "none";
+
+    }
+
+    /* DETERIORO */
+
+    const deterioration =
+        index /
+        (stages.length - 1);
 
     sprite.style.filter = `
-        contrast(${1 + deterioration * 1.5})
-        saturate(${1 + deterioration * 1.4})
-        blur(${deterioration * .8}px)
-        drop-shadow(8px 10px 4px rgba(0,0,0,.5))
+
+        contrast(
+            ${1 + deterioration * 1.5}
+        )
+
+        saturate(
+            ${1 + deterioration * 1.4}
+        )
+
+        blur(
+            ${deterioration * .8}px
+        )
+
+        drop-shadow(
+            8px 10px 4px
+            rgba(0,0,0,.5)
+        )
+
     `;
 
-    if (index >= 4) {
-        dialogue.classList.add("dialogueGlitch");
-        dialogue.style.background = "#080808";
-        dialogue.style.color = "#ff3333";
-        dialogue.style.borderColor = "#850000";
-        dialogue.style.filter = `blur(${deterioration * .45}px)`;
-    } else {
-        dialogue.classList.remove("dialogueGlitch");
-        dialogue.style.background = "white";
-        dialogue.style.color = "#111";
-        dialogue.style.borderColor = "#e7cf00";
-        dialogue.style.filter = "none";
+    /* DIÁLOGO DETERIORADO */
+
+    if(index >= 4) {
+
+        dialogue.classList.add(
+            "dialogueGlitch"
+        );
+
+        dialogue.style.background =
+            "#080808";
+
+        dialogue.style.color =
+            "#ff3333";
+
+        dialogue.style.borderColor =
+            "#850000";
+
     }
 
-    if (stage.glitch && Math.random() < .5) {
+    else {
+
+        dialogue.classList.remove(
+            "dialogueGlitch"
+        );
+
+        dialogue.style.background =
+            "white";
+
+        dialogue.style.color =
+            "#111";
+
+        dialogue.style.borderColor =
+            "#e7cf00";
+
+    }
+
+    /* 50% DE GLITCH */
+
+    if(
+        stage.glitch &&
+        Math.random() < .5
+    ) {
+
         startGlitch();
+
     }
 }
 
 /* =========================================================
-   GLITCH DE 2 SEGUNDOS
+   GLITCH
 ========================================================= */
 
 let glitchRunning = false;
 
 function startGlitch() {
-    if (glitchRunning) return;
+
+    if(glitchRunning) {
+        return;
+    }
+
     glitchRunning = true;
 
-    document.body.classList.add("glitching");
+    document.body.classList.add(
+        "glitching"
+    );
 
     setTimeout(() => {
-        document.body.classList.remove("glitching");
+
+        document.body.classList.remove(
+            "glitching"
+        );
+
         glitchRunning = false;
-    }, 2000);
+
+    },2000);
 }
 
 /* =========================================================
@@ -925,173 +1525,989 @@ function startGlitch() {
 ========================================================= */
 
 function updateExplore() {
-    if (!explore.classList.contains("active")) return;
 
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    if (maxScroll <= 0) return;
+    if(
+        !explore.classList.contains(
+            "active"
+        )
+    ) {
 
-    const progress = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+        return;
+
+    }
+
+    const maxScroll =
+        document.documentElement.scrollHeight
+        -
+        window.innerHeight;
+
+    if(maxScroll <= 0) {
+        return;
+    }
+
+    const progress =
+        Math.min(
+            1,
+            Math.max(
+                0,
+                window.scrollY
+                /
+                maxScroll
+            )
+        );
+
+    /* ENCONTRAR ETAPA */
 
     let stageIndex = 0;
-    for (let i = 0; i < stages.length; i++) {
-        if (progress >= stages[i].start) {
+
+    for(
+        let i = 0;
+        i < stages.length;
+        i++
+    ) {
+
+        if(
+            progress >=
+            stages[i].start
+        ) {
+
             stageIndex = i;
+
         }
     }
 
-    if (progress >= .86) {
-        if (!characterGone) {
+    /* =====================================================
+       PERSONAJE
+    ===================================================== */
+
+    if(progress >= .86) {
+
+        if(!characterGone) {
+
             characterGone = true;
-            companion.style.opacity = "0";
-            companion.style.transform = "translateY(100px) scale(.7)";
+
+            companion.style.opacity =
+                "0";
+
+            companion.style.transform =
+                "translateY(100px) scale(.7)";
+
         }
-    } else {
-        characterGone = false;
-        companion.style.opacity = "1";
-        companion.style.transform = "translateY(0) scale(1)";
-        setStage(stageIndex);
+
     }
+
+    else {
+
+        characterGone = false;
+
+        companion.style.opacity =
+            "1";
+
+        companion.style.transform =
+            "translateY(0) scale(1)";
+
+        setStage(
+            stageIndex
+        );
+
+    }
+
+    /* =====================================================
+       OSCURIDAD
+    ===================================================== */
 
     let amount = 0;
-    if (progress >= .35 && progress < .65) {
-        amount = ((progress - .35) / (.65 - .35)) * .75;
-    } else if (progress >= .65 && progress < .86) {
-        amount = .75;
-    } else if (progress >= .86 && progress < .94) {
-        amount = .75 * (1 - ((progress - .86) / (.94 - .86)));
-    } else if (progress >= .94) {
-        amount = 0;
+
+    /* EMPIEZA A OSCURECER */
+
+    if(
+        progress >= .35 &&
+        progress < .65
+    ) {
+
+        amount =
+            (
+                progress - .35
+            )
+            /
+            (
+                .65 - .35
+            );
+
+        amount *= .75;
+
     }
 
-    darkness.style.opacity = Math.max(0, Math.min(.75, amount));
+    /* ZONA ROJA */
+
+    else if(
+        progress >= .65 &&
+        progress < .86
+    ) {
+
+        amount = .75;
+
+    }
+
+    /* DESPUÉS DE HELP
+       VUELVE A LA NORMALIDAD */
+
+    else if(
+        progress >= .86 &&
+        progress < .94
+    ) {
+
+        amount =
+            .75 *
+            (
+                1 -
+                (
+                    (
+                        progress - .86
+                    )
+                    /
+                    (
+                        .94 - .86
+                    )
+                )
+            );
+
+    }
+
+    /* FINAL NORMAL */
+
+    else if(
+        progress >= .94
+    ) {
+
+        amount = 0;
+
+    }
+
+    darkness.style.opacity =
+        Math.max(
+            0,
+            Math.min(
+                .75,
+                amount
+            )
+        );
 }
 
-window.addEventListener("scroll", updateExplore);
-
-/* =========================================================
-   SONIDO DE VICTORIA
-========================================================= */
-
-const victorySound = new Audio("assets/victory.mp3");
-let victoryPlayed = false;
-
-const ending = document.getElementById("ending");
-const endingObserver = new IntersectionObserver(
-    entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !victoryPlayed) {
-                victoryPlayed = true;
-                victorySound.currentTime = 0;
-                victorySound.play().catch(() => {});
-            }
-        });
-    },
-    { threshold: .4 }
+window.addEventListener(
+    "scroll",
+    updateExplore,
+    {
+        passive: true
+    }
 );
 
-endingObserver.observe(ending);
+/* =========================================================
+   SONIDO FINAL
+
+   SUBE ESTE MP3 AL MISMO LUGAR
+   DONDE ESTÁ INDEX.HTML
+========================================================= */
+
+const victorySound =
+    new Audio(
+        "freesound_community-goodresult-82807.mp3"
+    );
+
+let victoryPlayed = false;
+
+const ending =
+    document.getElementById(
+        "ending"
+    );
+
+const endingObserver =
+    new IntersectionObserver(
+
+        entries => {
+
+            entries.forEach(
+                entry => {
+
+                    if(
+                        entry.isIntersecting
+                        &&
+                        !victoryPlayed
+                    ) {
+
+                        victoryPlayed = true;
+
+                        victorySound.currentTime =
+                            0;
+
+                        victorySound
+                            .play()
+                            .catch(
+                                () => {}
+                            );
+
+                    }
+
+                }
+            );
+
+        },
+
+        {
+            threshold: .35
+        }
+
+    );
+
+endingObserver.observe(
+    ending
+);
 
 /* =========================================================
    TIMER HASTA 3524
 ========================================================= */
 
-const targetDate = new Date(3524, 0, 1, 0, 0, 0);
+const targetDate =
+    new Date(
+        3524,
+        0,
+        1,
+        0,
+        0,
+        0
+    );
 
 function updateTimer() {
-    const now = new Date();
-    let difference = targetDate.getTime() - now.getTime();
-    if (difference < 0) difference = 0;
 
-    const SECOND = 1000;
-    const MINUTE = SECOND * 60;
-    const HOUR = MINUTE * 60;
-    const DAY = HOUR * 24;
-    const YEAR = DAY * 365.2425;
+    const now =
+        new Date();
 
-    const years = Math.floor(difference / YEAR);
-    difference -= years * YEAR;
+    let difference =
+        targetDate.getTime()
+        -
+        now.getTime();
 
-    const days = Math.floor(difference / DAY);
-    difference -= days * DAY;
+    if(difference < 0) {
 
-    const hours = Math.floor(difference / HOUR);
-    difference -= hours * HOUR;
+        difference = 0;
 
-    const minutes = Math.floor(difference / MINUTE);
-    difference -= minutes * MINUTE;
+    }
 
-    const seconds = Math.floor(difference / SECOND);
+    const SECOND =
+        1000;
 
-    const locale = getCurrentLocale();
+    const MINUTE =
+        SECOND * 60;
 
-    document.getElementById("years").textContent = years.toLocaleString(locale);
-    document.getElementById("days").textContent = days.toLocaleString(locale);
-    document.getElementById("hours").textContent = String(hours).padStart(2, "0");
-    document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
-    document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+    const HOUR =
+        MINUTE * 60;
+
+    const DAY =
+        HOUR * 24;
+
+    const YEAR =
+        DAY * 365.2425;
+
+    const years =
+        Math.floor(
+            difference / YEAR
+        );
+
+    difference -=
+        years * YEAR;
+
+    const days =
+        Math.floor(
+            difference / DAY
+        );
+
+    difference -=
+        days * DAY;
+
+    const hours =
+        Math.floor(
+            difference / HOUR
+        );
+
+    difference -=
+        hours * HOUR;
+
+    const minutes =
+        Math.floor(
+            difference / MINUTE
+        );
+
+    difference -=
+        minutes * MINUTE;
+
+    const seconds =
+        Math.floor(
+            difference / SECOND
+        );
+
+    const locale =
+        getCurrentLocale();
+
+    document
+        .getElementById(
+            "years"
+        )
+        .textContent =
+        years.toLocaleString(
+            locale
+        );
+
+    document
+        .getElementById(
+            "days"
+        )
+        .textContent =
+        days.toLocaleString(
+            locale
+        );
+
+    document
+        .getElementById(
+            "hours"
+        )
+        .textContent =
+        String(hours)
+        .padStart(
+            2,
+            "0"
+        );
+
+    document
+        .getElementById(
+            "minutes"
+        )
+        .textContent =
+        String(minutes)
+        .padStart(
+            2,
+            "0"
+        );
+
+    document
+        .getElementById(
+            "seconds"
+        )
+        .textContent =
+        String(seconds)
+        .padStart(
+            2,
+            "0"
+        );
 }
 
 /* =========================================================
-   IDIOMAS
+   TRADUCCIONES
 ========================================================= */
 
 const translations = {
-    es: { explore: "Explorar", timer: "Timer", gallery: "Galería", subtitle: "Tiempo hasta el año 3524", years: "AÑOS", days: "DÍAS", hours: "HORAS", minutes: "MINUTOS", seconds: "SEGUNDOS" },
-    en: { explore: "Explore", timer: "Timer", gallery: "Gallery", subtitle: "Time until the year 3524", years: "YEARS", days: "DAYS", hours: "HOURS", minutes: "MINUTES", seconds: "SECONDS" },
-    fr: { explore: "Explorer", timer: "Minuteur", gallery: "Galerie", subtitle: "Temps restant jusqu'à l'année 3524", years: "ANS", days: "JOURS", hours: "HEURES", minutes: "MINUTES", seconds: "SECONDES" },
-    de: { explore: "Erkunden", timer: "Timer", gallery: "Galerie", subtitle: "Zeit bis zum Jahr 3524", years: "JAHRE", days: "TAGE", hours: "STUNDEN", minutes: "MINUTEN", seconds: "SEKUNDEN" },
-    pt: { explore: "Explorar", timer: "Timer", gallery: "Galeria", subtitle: "Tempo até o ano 3524", years: "ANOS", days: "DIAS", hours: "HORAS", minutes: "MINUTOS", seconds: "SEGUNDOS" },
-    it: { explore: "Esplora", timer: "Timer", gallery: "Galleria", subtitle: "Tempo fino all'anno 3524", years: "ANNI", days: "GIORNI", hours: "ORE", minutes: "MINUTI", seconds: "SECONDI" },
-    nl: { explore: "Verkennen", timer: "Timer", gallery: "Galerij", subtitle: "Tijd tot het jaar 3524", years: "JAREN", days: "DAGEN", hours: "UREN", minutes: "MINUTEN", seconds: "SECONDEN" },
-    pl: { explore: "Eksploruj", timer: "Timer", gallery: "Galeria", subtitle: "Czas do roku 3524", years: "LAT", days: "DNI", hours: "GODZIN", minutes: "MINUT", seconds: "SEKUND" },
-    ru: { explore: "Исследовать", timer: "Таймер", gallery: "Галерея", subtitle: "Время до 3524 года", years: "ЛЕТ", days: "ДНЕЙ", hours: "ЧАСОВ", minutes: "МИНУТ", seconds: "СЕКУНД" },
-    ja: { explore: "探索", timer: "タイマー", gallery: "ギャラリー", subtitle: "3524年までの時間", years: "年", days: "日", hours: "時間", minutes: "分", seconds: "秒" },
-    ko: { explore: "탐색", timer: "타이머", gallery: "갤러리", subtitle: "3524년까지 남은 시간", years: "년", days: "일", hours: "시간", minutes: "분", seconds: "초" },
-    zh: { explore: "探索", timer: "计时器", gallery: "画廊", subtitle: "距离3524年的时间", years: "年", days: "天", hours: "小时", minutes: "分钟", seconds: "秒" },
-    ar: { explore: "استكشاف", timer: "المؤقت", gallery: "المعرض", subtitle: "الوقت المتبقي حتى عام 3524", years: "سنوات", days: "أيام", hours: "ساعات", minutes: "دقائق", seconds: "ثوان" },
-    tr: { explore: "Keşfet", timer: "Zamanlayıcı", gallery: "Galeri", subtitle: "3524 yılına kalan süre", years: "YIL", days: "GÜN", hours: "SAAT", minutes: "DAKİKA", seconds: "SANİYE" }
+
+    es: {
+
+        explore:
+            "Explorar",
+
+        timer:
+            "Timer",
+
+        gallery:
+            "Galería",
+
+        subtitle:
+            "Tiempo hasta el año 3524",
+
+        years:
+            "AÑOS",
+
+        days:
+            "DÍAS",
+
+        hours:
+            "HORAS",
+
+        minutes:
+            "MINUTOS",
+
+        seconds:
+            "SEGUNDOS"
+    },
+
+    en: {
+
+        explore:
+            "Explore",
+
+        timer:
+            "Timer",
+
+        gallery:
+            "Gallery",
+
+        subtitle:
+            "Time until the year 3524",
+
+        years:
+            "YEARS",
+
+        days:
+            "DAYS",
+
+        hours:
+            "HOURS",
+
+        minutes:
+            "MINUTES",
+
+        seconds:
+            "SECONDS"
+    },
+
+    fr: {
+
+        explore:
+            "Explorer",
+
+        timer:
+            "Minuteur",
+
+        gallery:
+            "Galerie",
+
+        subtitle:
+            "Temps restant jusqu'à l'année 3524",
+
+        years:
+            "ANS",
+
+        days:
+            "JOURS",
+
+        hours:
+            "HEURES",
+
+        minutes:
+            "MINUTES",
+
+        seconds:
+            "SECONDES"
+    },
+
+    de: {
+
+        explore:
+            "Erkunden",
+
+        timer:
+            "Timer",
+
+        gallery:
+            "Galerie",
+
+        subtitle:
+            "Zeit bis zum Jahr 3524",
+
+        years:
+            "JAHRE",
+
+        days:
+            "TAGE",
+
+        hours:
+            "STUNDEN",
+
+        minutes:
+            "MINUTEN",
+
+        seconds:
+            "SEKUNDEN"
+    },
+
+    pt: {
+
+        explore:
+            "Explorar",
+
+        timer:
+            "Timer",
+
+        gallery:
+            "Galeria",
+
+        subtitle:
+            "Tempo até o ano 3524",
+
+        years:
+            "ANOS",
+
+        days:
+            "DIAS",
+
+        hours:
+            "HORAS",
+
+        minutes:
+            "MINUTOS",
+
+        seconds:
+            "SEGUNDOS"
+    },
+
+    it: {
+
+        explore:
+            "Esplora",
+
+        timer:
+            "Timer",
+
+        gallery:
+            "Galleria",
+
+        subtitle:
+            "Tempo fino all'anno 3524",
+
+        years:
+            "ANNI",
+
+        days:
+            "GIORNI",
+
+        hours:
+            "ORE",
+
+        minutes:
+            "MINUTI",
+
+        seconds:
+            "SECONDI"
+    },
+
+    nl: {
+
+        explore:
+            "Verkennen",
+
+        timer:
+            "Timer",
+
+        gallery:
+            "Galerij",
+
+        subtitle:
+            "Tijd tot het jaar 3524",
+
+        years:
+            "JAREN",
+
+        days:
+            "DAGEN",
+
+        hours:
+            "UREN",
+
+        minutes:
+            "MINUTEN",
+
+        seconds:
+            "SECONDEN"
+    },
+
+    pl: {
+
+        explore:
+            "Eksploruj",
+
+        timer:
+            "Timer",
+
+        gallery:
+            "Galeria",
+
+        subtitle:
+            "Czas do roku 3524",
+
+        years:
+            "LAT",
+
+        days:
+            "DNI",
+
+        hours:
+            "GODZIN",
+
+        minutes:
+            "MINUT",
+
+        seconds:
+            "SEKUND"
+    },
+
+    ru: {
+
+        explore:
+            "Исследовать",
+
+        timer:
+            "Таймер",
+
+        gallery:
+            "Галерея",
+
+        subtitle:
+            "Время до 3524 года",
+
+        years:
+            "ЛЕТ",
+
+        days:
+            "ДНЕЙ",
+
+        hours:
+            "ЧАСОВ",
+
+        minutes:
+            "МИНУТ",
+
+        seconds:
+            "СЕКУНД"
+    },
+
+    ja: {
+
+        explore:
+            "探索",
+
+        timer:
+            "タイマー",
+
+        gallery:
+            "ギャラリー",
+
+        subtitle:
+            "3524年までの時間",
+
+        years:
+            "年",
+
+        days:
+            "日",
+
+        hours:
+            "時間",
+
+        minutes:
+            "分",
+
+        seconds:
+            "秒"
+    },
+
+    ko: {
+
+        explore:
+            "탐색",
+
+        timer:
+            "타이머",
+
+        gallery:
+            "갤러리",
+
+        subtitle:
+            "3524년까지 남은 시간",
+
+        years:
+            "년",
+
+        days:
+            "일",
+
+        hours:
+            "시간",
+
+        minutes:
+            "분",
+
+        seconds:
+            "초"
+    },
+
+    zh: {
+
+        explore:
+            "探索",
+
+        timer:
+            "计时器",
+
+        gallery:
+            "画廊",
+
+        subtitle:
+            "距离3524年的时间",
+
+        years:
+            "年",
+
+        days:
+            "天",
+
+        hours:
+            "小时",
+
+        minutes:
+            "分钟",
+
+        seconds:
+            "秒"
+    },
+
+    ar: {
+
+        explore:
+            "استكشاف",
+
+        timer:
+            "المؤقت",
+
+        gallery:
+            "المعرض",
+
+        subtitle:
+            "الوقت المتبقي حتى عام 3524",
+
+        years:
+            "سنوات",
+
+        days:
+            "أيام",
+
+        hours:
+            "ساعات",
+
+        minutes:
+            "دقائق",
+
+        seconds:
+            "ثوان"
+    },
+
+    tr: {
+
+        explore:
+            "Keşfet",
+
+        timer:
+            "Zamanlayıcı",
+
+        gallery:
+            "Galeri",
+
+        subtitle:
+            "3524 yılına kalan süre",
+
+        years:
+            "YIL",
+
+        days:
+            "GÜN",
+
+        hours:
+            "SAAT",
+
+        minutes:
+            "DAKİKA",
+
+        seconds:
+            "SANİYE"
+    }
+
 };
 
+/* =========================================================
+   IDIOMA
+========================================================= */
+
 function getCurrentLocale() {
-    const selected = document.getElementById("language").value;
-    return selected === "auto" ? (navigator.language || "en") : selected;
+
+    const selected =
+        document
+        .getElementById(
+            "language"
+        )
+        .value;
+
+    if(
+        selected === "auto"
+    ) {
+
+        return (
+            navigator.language
+            ||
+            "en"
+        );
+
+    }
+
+    return selected;
 }
 
 function translatePage() {
-    let language = document.getElementById("language").value;
-    if (language === "auto") {
-        language = (navigator.language || "en").split("-")[0];
+
+    let language =
+        document
+        .getElementById(
+            "language"
+        )
+        .value;
+
+    if(
+        language === "auto"
+    ) {
+
+        language =
+            (
+                navigator.language
+                ||
+                "en"
+            )
+            .split("-")[0];
+
     }
 
-    const t = translations[language] || translations.en;
+    const t =
+        translations[language]
+        ||
+        translations.en;
 
-    document.getElementById("exploreButton").textContent = t.explore;
-    document.getElementById("timerButton").textContent = t.timer;
-    document.getElementById("galleryButton").textContent = t.gallery;
-    document.getElementById("galleryTitle").textContent = t.gallery;
-    document.getElementById("timerSubtitle").textContent = t.subtitle;
-    document.getElementById("yearsLabel").textContent = t.years;
-    document.getElementById("daysLabel").textContent = t.days;
-    document.getElementById("hoursLabel").textContent = t.hours;
-    document.getElementById("minutesLabel").textContent = t.minutes;
-    document.getElementById("secondsLabel").textContent = t.seconds;
+    document
+        .getElementById(
+            "exploreButton"
+        )
+        .textContent =
+        t.explore;
 
-    document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
+    document
+        .getElementById(
+            "timerButton"
+        )
+        .textContent =
+        t.timer;
+
+    document
+        .getElementById(
+            "galleryButton"
+        )
+        .textContent =
+        t.gallery;
+
+    document
+        .getElementById(
+            "galleryTitle"
+        )
+        .textContent =
+        t.gallery;
+
+    document
+        .getElementById(
+            "timerSubtitle"
+        )
+        .textContent =
+        t.subtitle;
+
+    document
+        .getElementById(
+            "yearsLabel"
+        )
+        .textContent =
+        t.years;
+
+    document
+        .getElementById(
+            "daysLabel"
+        )
+        .textContent =
+        t.days;
+
+    document
+        .getElementById(
+            "hoursLabel"
+        )
+        .textContent =
+        t.hours;
+
+    document
+        .getElementById(
+            "minutesLabel"
+        )
+        .textContent =
+        t.minutes;
+
+    document
+        .getElementById(
+            "secondsLabel"
+        )
+        .textContent =
+        t.seconds;
+
+    if(
+        language === "ar"
+    ) {
+
+        document
+            .documentElement
+            .dir =
+            "rtl";
+
+    }
+
+    else {
+
+        document
+            .documentElement
+            .dir =
+            "ltr";
+
+    }
+
     updateTimer();
 }
 
-document.getElementById("language").addEventListener("change", translatePage);
+/* =========================================================
+   EVENTOS
+========================================================= */
+
+document
+    .getElementById(
+        "language"
+    )
+    .addEventListener(
+        "change",
+        translatePage
+    );
 
 /* =========================================================
    INICIAR
 ========================================================= */
 
 translatePage();
+
 updateTimer();
-setInterval(updateTimer, 1000);
+
+setInterval(
+    updateTimer,
+    1000
+);
+
 setStage(0);
+
 updateExplore();
 
 </script>
+
 </body>
 </html>
